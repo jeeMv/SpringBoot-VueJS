@@ -5,18 +5,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.jeemv.springboot.vuejs.parts.VueComputeds;
 import io.github.jeemv.springboot.vuejs.parts.VueData;
 import io.github.jeemv.springboot.vuejs.parts.VueMethods;
+import io.github.jeemv.springboot.vuejs.parts.VueWatcher;
+import io.github.jeemv.springboot.vuejs.parts.VueWatchers;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
 /**
  * VueJS instance
  * @author jcheron
- * @version 1.0.0.0
+ * @version 1.0.0.1
  */
 public class VueJS {
 	private String el;
 	private VueData data;
 	private VueMethods methods;
 	private VueComputeds computed;
+	private VueWatchers watchers;
 	private String[] delimiters;
 	
 	/**
@@ -27,6 +30,7 @@ public class VueJS {
 		data=new VueData();
 		methods=new VueMethods();
 		computed=new VueComputeds();
+		watchers=new VueWatchers();
 		this.setDelimiters("<%", "%>");
 	}
 	
@@ -87,6 +91,115 @@ public class VueJS {
 	}
 	
 	/**
+	 * Attaches an existing function for observing the variable 
+	 * The function must have the prototype function (oldVal, val)
+	 * @param variableName the variable to observe
+	 * @param methodName the method that observes
+	 * @param deep if true, detect nested value changes inside Objects
+	 * @param immediate if true, the callback will be called immediately after the start of the observation
+	 */
+	public void attachWatcher(String variableName,String methodName,boolean deep,boolean immediate) {
+		watchers.add(variableName, methodName, deep, immediate);
+	}
+	
+	/**
+	 * Attaches an existing function for observing the variable
+	 * The function must have the prototype function (oldVal, val)
+	 * @param variableName the variable to observe
+	 * @param methodName the method that observes
+	 * @param deep if true, detect nested value changes inside Objects
+	 */
+	public void attachWatcher(String variableName,String methodName,boolean deep) {
+		watchers.add(variableName, methodName, deep, false);
+	}
+	
+	/**
+	 * Attaches an existing function for observing the variable
+	 * The function must have the prototype function (oldVal, val)
+	 * @param variableName the variable to observe
+	 * @param methodName the method that observes
+	 */
+	public void attachWatcher(String variableName,String methodName) {
+		watchers.add(variableName, methodName, false, false);
+	}
+	
+	/**
+	 * Attaches an existing function for observing the variable, the callback will be called immediately after the start of the observation
+	 * The function must have the prototype function (oldVal, val)
+	 * @param variableName the variable to observe
+	 * @param methodName the method that observes
+	 */
+	public void attachImmediateWatcher(String variableName,String methodName) {
+		watchers.add(variableName, methodName, false, true);
+	}
+	
+	/**
+	 * Attaches an existing function for observing the variable, detect nested value changes inside Objects
+	 * The function must have the prototype function (oldVal, val)
+	 * @param variableName the variable to observe
+	 * @param methodName the method that observes
+	 */
+	public void attachDeepWatcher(String variableName,String methodName) {
+		watchers.add(variableName, methodName, true, false);
+	}
+	
+	/**
+	 * Adds a watcher on variableName
+	 * Handlers have oldVal and val as parameters
+	 * @param variableName the variable to observe
+	 * @param deep if true, detect nested value changes inside Objects
+	 * @param immediate if true, the callback will be called immediately after the start of the observation
+	 * @param handlers the bodies of the methods that observe
+	 */
+	public void addWatcher(String variableName,boolean deep,boolean immediate,String...handlers) {
+		VueWatcher vueWatcher=watchers.addHandlers(variableName, handlers);
+		vueWatcher.setDeep(deep);
+		vueWatcher.setImmediate(immediate);
+	}
+	
+	/**
+	 * Adds a watcher on variableName
+	 * Handlers have oldVal and val as parameters
+	 * @param variableName the variable to observe
+	 * @param deep if true, detect nested value changes inside Objects
+	 * @param handlers the bodies of the methods that observe
+	 */
+	public void addWatcher(String variableName,boolean deep,String...handlers) {
+		this.addWatcher(variableName, deep, false, handlers);
+	}
+	
+	/**
+	 * Adds a watcher on variableName
+	 * Handlers have oldVal and val as parameters
+	 * @param variableName the variable to observe
+	 * @param handlers the bodies of the methods that observe
+	 */
+	public void addWatcher(String variableName,String...handlers) {
+		this.addWatcher(variableName, false, false, handlers);
+	}
+	
+	/**
+	 * Adds an immediate watcher on variableName, the callback will be called immediately after the start of the observation
+	 * Handlers have oldVal and val as parameters
+	 * @param variableName the variable to observe
+	 * @param handlers the bodies of the methods that observe
+	 */
+	public void addImmediateWatcher(String variableName,String...handlers) {
+		this.addWatcher(variableName, false, true, handlers);
+	}
+	
+	/**
+	 * Adds a deep watcher on variableName, detect nested value changes inside Objects
+	 * Handlers have oldVal and val as parameters
+	 * @param variableName the variable to observe
+	 * @param handlers the bodies of the methods that observe
+	 */
+	public void addDeepWatcher(String variableName,String...handlers) {
+		this.addWatcher(variableName, true, false, handlers);
+	}
+	
+	/**
+	 * Returns the generated script creating the VueJS instance
 	 * @return the generated script (javascript)
 	 */
 	public String getScript() {
@@ -117,5 +230,18 @@ public class VueJS {
 
 	public VueComputeds getComputed() {
 		return computed;
+	}
+
+	@Override
+	public String toString() {
+		return getScript();
+	}
+
+	public void setEl(String el) {
+		this.el = el;
+	}
+
+	public VueWatchers getWatchers() {
+		return watchers;
 	}
 }

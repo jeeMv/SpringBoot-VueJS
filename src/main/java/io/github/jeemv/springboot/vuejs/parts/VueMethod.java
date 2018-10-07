@@ -6,6 +6,7 @@ import java.util.List;
 public class VueMethod {
 	private List<String> params;
 	private String body;
+	private String name;
 	
 	public VueMethod(String body,String...params) {
 		this.body=body;
@@ -31,7 +32,18 @@ public class VueMethod {
 	@Override
 	public String toString() {
 		String parameters=String.join(",",this.params);
+		if(name!=null && !"".equals(name)) {
+			return "function "+name+"("+parameters+"){"+body+"}";
+		}
 		return "function("+parameters+"){"+body+"}";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

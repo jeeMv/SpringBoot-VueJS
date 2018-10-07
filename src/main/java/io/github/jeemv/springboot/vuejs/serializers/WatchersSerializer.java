@@ -5,26 +5,26 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-import io.github.jeemv.springboot.vuejs.parts.VueMethods;
+import io.github.jeemv.springboot.vuejs.parts.VueWatchers;
 import io.github.jeemv.springboot.vuejs.utilities.Serialization;
 
-public class MethodsSerializer extends StdSerializer<VueMethods> {
+public class WatchersSerializer extends StdSerializer<VueWatchers> {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MethodsSerializer() {
+	public WatchersSerializer() {
 		this(null);
 	}
 	
-	protected MethodsSerializer(Class<VueMethods> t) {
+	protected WatchersSerializer(Class<VueWatchers> t) {
 		super(t);
 	}
 
 	@Override
-	public void serialize(VueMethods value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+	public void serialize(VueWatchers value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 		Serialization.serializeParts(value, gen, provider);
 	}
 

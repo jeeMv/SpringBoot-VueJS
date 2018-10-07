@@ -43,6 +43,9 @@ public class VueJSSerializer extends StdSerializer<VueJS> {
         if(!value.getComputed().isEmpty()) {
         	gen.writeRaw(", computed:"+JsUtils.objectToJSON(value.getComputed())+"");
         }
+        if(!value.getWatchers().isEmpty()) {
+        	gen.writeRaw(", watch:"+JsUtils.objectToJSON(value.getWatchers())+"");
+        }
         gen.writeEndObject();
 		
 	}
