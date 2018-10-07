@@ -16,7 +16,6 @@ public class VueJSAspect {
 	public Object injectVueJSOnMethod(ProceedingJoinPoint joinPoint,VueJSInstance vueJSInstance,ModelMap model,VueJS vue) throws Throwable {
 	    vue.setEl(vueJSInstance.selector());
 		model.addAttribute(vueJSInstance.modelName(), vue);
-		System.out.println(joinPoint.getTarget());
 	    return joinPoint.proceed();
 	}
 }
