@@ -111,7 +111,7 @@ vue.addMethod("addScore","this.scores.push(score)","score");
 ## Configuration
 ### VueJS delimiters
 Default delimiters are `<%` and `%>`.
-For changing the plain text interpolation delimiters and avoid conflict with other template packages
+For changing the plain text interpolation delimiters and avoid conflict with other template packages, you can modify them with:
 ```java
 vue.setDelimiters("{!","!}");
 ```
