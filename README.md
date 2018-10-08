@@ -87,3 +87,13 @@ public class UiTest {
 	}
 }
 ```
+
+## Methods
+
+## Configuration
+### VueJS delimiters
+Default delimiters are `<%` and `%>`.
+For changing the plain text interpolation delimiters and avoid conflict with other template packages
+```java
+vue.setDelimiters("{!","!}");
+```
