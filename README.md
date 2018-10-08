@@ -89,12 +89,18 @@ public class UiTest {
 ```
 
 ## Methods
-###addData
+### addData
 Adds data object for the Vue instance.
 ```java
 vue.addData("visible",false);
 vue.addData("group",group);//where group is an instance of the class Group
 vue.addData("users",users);//where users is an ArrayList of User
+```
+### addMethod
+Adds a method to the vue instance
+```java
+vue.addMethod("toggleVisible", "this.visible=!this.visible;");
+vue.addMethod("addScore","this.scores.push(score)","score");
 ```
 ## Configuration
 ### VueJS delimiters
