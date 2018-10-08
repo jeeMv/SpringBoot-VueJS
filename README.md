@@ -108,6 +108,30 @@ Adds a method to the vue instance
 vue.addMethod("toggleVisible", "this.visible=!this.visible;");
 vue.addMethod("addScore","this.scores.push(score)","score");
 ```
+
+### addComputed
+Adds a computed property to the vue instance
+
+```java
+vue.addComputed("count", "return this.users.length");
+```
+
+A computed property can have a setter:
+
+```java
+vue.addMethod("fullname","return this.firstName + ' ' + this.lastName;","var names = newValue.split(' ');
+                                                                        this.firstName = names[0];
+									this.lastName = names[names.length - 1];");
+```
+
+### addWatcher
+Adds a watcher on variable to the view instance
+
+```java
+vue.addWatcher("value", "'value was '+oldValue+'. It is now '+val;");
+```
+
+
 ## Configuration
 ### VueJS delimiters
 Default delimiters are `<%` and `%>`.
