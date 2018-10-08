@@ -1,7 +1,7 @@
 # SpringBoot-VueJS 
-`SpringBoot-VueJS`adds `VueJS` to a `SpringBoot` Project to Create Client-Side Application Logic Within Spring Controllers.
+`SpringBoot-VueJS`adds `VueJS` to a `SpringBoot` Project for Creating Client-Side Application Logic Within Spring Controllers.
 ## Maven integration
-
+Insert the dependency in your `pom.xml`file:
 ```xml
 <dependency>
     <groupId>io.github.jeemv.springboot.vuejs</groupId>
@@ -35,14 +35,14 @@ The `index.html` mustache view:
 {{{vue}}}
 ```
 
-Mustache view use double mustache for variable, so the VueJS instance is set by default to use `<%` and `%>` as delimiters.
+Mustache view use double mustache for variables (message in the example), so the VueJS instance is set by default to use `<%` and `%>` as delimiters.
 
 The `vue` variable generates the javascript code for the view instance creation. The triple mustache `{{{vue}}}`is use for unescape javascript/html code.
 
 
-It is possible to avoid instantiation, and the passage of the variable to the view :
-
 #### With @ModelAttribute annotation
+
+It is possible to avoid instantiation, and the passage of the variable to the view :
 
 ```java
 @Controller
