@@ -37,7 +37,7 @@ The `index.html` mustache view:
 
 Mustache view use double mustache for variables (message in the example), so the VueJS instance is set by default to use `<%` and `%>` as delimiters.
 
-The `vue` variable generates the javascript code for the view instance creation. The triple mustache `{{{vue}}}`is use for unescape javascript/html code.
+The `vue` variable generates the javascript code for the view instance creation. The triple mustache `{{{vue}}}`is use for javascript/html code unescaping.
 
 
 #### With @ModelAttribute annotation
