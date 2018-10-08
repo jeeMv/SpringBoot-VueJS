@@ -16,8 +16,8 @@
 @Controller
 @RequestMapping("/ui/")
 public class UiTest {
-	@GetMapping("form")
-	public String form(ModelMap model) {
+	@GetMapping("test")
+	public String index(ModelMap model) {
 		VueJS vue=new VueJS("#app");
 		vue.addData("message", "Hello world!");
 		model.put("vue", vue);
@@ -33,4 +33,57 @@ The `index.html` mustache view:
 <input v-model="message">
 </div>
 {{{vue}}}
+```
+It is possible to avoid instantiation, and the passage of the variable to the view :
+
+#### With @ModelAttribute annotation
+
+```java
+@Controller
+@RequestMapping("/ui/")
+public class UiTest {
+
+	@ModelAttribute("vue")
+	public VueJS getVue() {
+		return new VueJS("#app");
+	}
+	
+	@GetMapping("test")
+	public String index(@ModelAttribute("vue") VueJS vue) {
+		vue.addData("message", "Hello world!");
+		return "index";
+	}
+}
+```
+
+#### With @VueJSInstance annotation and Spring AOP
+
+AOP loading in `pom.xml`:
+```xml
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-aop</artifactId>
+	    </dependency>
+```
+AOP activation in app config file:
+```java
+@Configuration
+@ComponentScan("io.github.jeemv.springboot.vuejs.aspects")
+@EnableAspectJAutoProxy
+public class AppConfig {
+
+}
+```
+AOP usage in controller:
+```java
+@Controller
+@RequestMapping("/ui/")
+public class UiTest {
+	@GetMapping("test")
+	@VueJSInstance
+	public String test2(VueJS vue,ModelMap model) {
+		vue.addData("message", "Hello world!");
+		return "index";
+	}
+}
 ```
