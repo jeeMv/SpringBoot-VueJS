@@ -89,7 +89,13 @@ public class UiTest {
 ```
 
 ## Methods
-
+###addData
+Adds data object for the Vue instance.
+```java
+vue.addData("visible",false);
+vue.addData("group",group);//where group is an instance of the class Group
+vue.addData("users",users);//where users is an ArrayList of User
+```
 ## Configuration
 ### VueJS delimiters
 Default delimiters are `<%` and `%>`.
