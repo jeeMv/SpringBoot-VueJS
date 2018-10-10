@@ -3,6 +3,7 @@ package io.github.jeemv.springboot.vuejs.parts;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class VueMethod {
 	private List<String> params;
 	private String body;
@@ -32,10 +33,11 @@ public class VueMethod {
 	@Override
 	public String toString() {
 		String parameters=String.join(",",this.params);
+		String thisName="";
 		if(name!=null && !"".equals(name)) {
-			return "function "+name+"("+parameters+"){"+body+"}";
+			thisName=" "+name;
 		}
-		return "function("+parameters+"){"+body+"}";
+		return "function "+thisName+"("+parameters+"){"+body+"}";
 	}
 
 	public String getName() {

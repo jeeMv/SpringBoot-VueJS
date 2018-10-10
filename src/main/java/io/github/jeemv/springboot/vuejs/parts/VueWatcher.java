@@ -20,7 +20,11 @@ public class VueWatcher {
 	public VueWatcher(String...methodsBody) {
 		handlers=new ArrayList<>();
 		for(String body:methodsBody) {
-			handlers.add(new VueMethod(body, "val","oldVal"));
+			VueMethod vm=new VueMethod(body, "val","oldVal");
+			handlers.add(vm);
+			if(methodsBody.length>1) {
+				vm.setName("handler"+handlers.size());
+			}
 		}
 	}
 	
@@ -33,7 +37,6 @@ public class VueWatcher {
 			if(handlers.size()==1) {
 				result= handlers.get(0).toString();
 			}else {
-			
 				try {
 					result= JsUtils.objectToJSON(this.handlers);
 				} catch (JsonProcessingException e) {

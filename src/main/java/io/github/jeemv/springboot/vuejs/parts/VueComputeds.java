@@ -1,5 +1,8 @@
 package io.github.jeemv.springboot.vuejs.parts;
 
+import io.github.jeemv.springboot.vuejs.VueConfig;
+import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
+
 public class VueComputeds extends VuePart {
 	
 	public void add(String name,String get,String set) {
@@ -14,7 +17,10 @@ public class VueComputeds extends VuePart {
 	public String toString() {
 		String datas=super.toString();
 		if(datas!=null) {
-			return "{ "+datas+" }";
+			if(VueConfig.debug) {
+				datas=JsUtils.cleanJS(datas);
+			}
+			return datas;
 		}
 		return "";
 	}
