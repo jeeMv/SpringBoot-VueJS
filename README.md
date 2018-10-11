@@ -131,6 +131,39 @@ Adds a watcher on variable to the view instance
 vue.addWatcher("value", "'value was '+oldValue+'. It is now '+val;");
 ```
 
+## Components
+It is possible to create components at runtime, but it is more efficient to generate them before:
+
+```java
+public class CompoButton {
+	public static void main (String[] args) throws java.lang.Exception  {
+		VueComponent compo=new VueComponent("button-counter");
+		compo.addData("count", 0);
+		compo.setTemplate("<button @click=\"count++\">You clicked me {{ count }} times.</button>");
+		compo.createFile("vueJS/button.js", false);
+	}
+}
+```
+The generated file is created in `{project-folder}/target/classes/static/vueJS/button.js`
+
+```javascript
+//Script generated with VueComponent at Thu Oct 11 03:01:09 CEST 2018
+Vue.component('button-counter',{
+	"data":function() {
+		 return {
+			"count":0
+			};
+		}
+	,"template":"<button @click=\"count++\">You clicked me {{ count }} times.</button>"
+	}
+);
+```
+Usage:
+
+```html
+<button-counter></button-counter>
+```
+
 
 ## Configuration
 ### VueJS delimiters
