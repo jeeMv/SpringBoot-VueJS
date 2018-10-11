@@ -124,7 +124,7 @@ public class VueComponent extends AbstractVueJS{
 	 * Generates a new VueJS component and save it to a file
 	 * @param pathFilename the path file name (from static folder)
 	 * @param minify if true minify the javascript source code
-	 * @throws IOException
+	 * @throws IOException for file creation
 	 */
 	public void createFile(String pathFilename,boolean minify) throws IOException {
 		Resource resource = new ClassPathResource("static/");
@@ -152,6 +152,7 @@ public class VueComponent extends AbstractVueJS{
 		try {
 			writer = new BufferedWriter(new FileWriter(f));
 			internal=true;
+			template=template.replace("\r\n", "");
 			String contents = addGenerated()+this;
 			if(!minify) {
 				contents=JsUtils.cleanJS(contents);
