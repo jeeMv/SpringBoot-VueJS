@@ -146,6 +146,25 @@ public class CompoButton {
 ```
 The generated file is created in `{project-folder}/target/classes/static/vueJS/button.js`
 
+```javascript
+//Script generated with VueComponent at Thu Oct 11 03:01:09 CEST 2018
+Vue.component('button-counter',{
+	"data":function() {
+		 return {
+			"count":0
+			};
+		}
+	,"template":"<button @click=\"count++\">You clicked me {{ count }} times.</button>"
+	}
+);
+```
+Usage:
+
+```html
+<button-counter></button-counter>
+```
+
+
 ## Configuration
 ### VueJS delimiters
 Default delimiters are `<%` and `%>`.
