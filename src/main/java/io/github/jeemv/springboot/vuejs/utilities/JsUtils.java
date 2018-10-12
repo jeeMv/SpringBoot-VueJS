@@ -67,6 +67,7 @@ public class JsUtils {
 	}
 	
 	private static String[] splitLines(String javascriptCode) {
+		javascriptCode=Matcher.quoteReplacement(javascriptCode);
 		Pattern regex = Pattern.compile("\\'[^']*'|(?:\\\"(?:\\\\\\\"|[^\\\"])*\\\")|([;\\\\{\\\\}])");
 		Matcher m = regex.matcher(javascriptCode);
 		StringBuffer b= new StringBuffer();

@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.jeemv.springboot.vuejs.AbstractVueJS;
+import io.github.jeemv.springboot.vuejs.VueConfig;
 import io.github.jeemv.springboot.vuejs.console.CommandAction;
 import io.github.jeemv.springboot.vuejs.console.CommandPrompt;
 import io.github.jeemv.springboot.vuejs.parts.VueProps;
@@ -82,6 +83,10 @@ public class VueComponent extends AbstractVueJS{
 			e.printStackTrace();
 		}
 	}
+	
+	public void setDefaultTemplateFile() {
+		setTemplateFile(VueConfig.getTemplateComponentFolder()+"/"+name+".html");
+	}
 
 	public boolean isInternal() {
 		return internal;
@@ -147,19 +152,24 @@ public class VueComponent extends AbstractVueJS{
 		}
 	}
 	
+	public void createFile(boolean minify) throws IOException {
+		String path=VueConfig.getComponentFolder()+"/"+name+".js";
+		createFile(path, minify);
+	}
+	
 	private void writeInfile(File f,String pathFilename,boolean minify) throws IOException {
 		Writer writer=null;
 		try {
 			writer = new BufferedWriter(new FileWriter(f));
 			internal=true;
-			template=template.replace("\r\n", "");
+			template=template.replace("\r\n", "").replace("\t", "    ");
 			String contents = addGenerated()+this;
 			if(!minify) {
 				contents=JsUtils.cleanJS(contents);
 			}
 	        writer.write(contents);
 	        System.out.println("Script generated in "+f.getCanonicalPath());
-	        System.out.println("Insert <script src=\""+pathFilename+"\"></script> in html file to use it.");
+	        System.out.println("Insert <script src=\"/"+pathFilename+"\"></script> in html file to use it.");
 		}finally{
 			try{
 				if ( writer != null)
