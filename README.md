@@ -6,7 +6,7 @@ Insert the dependency in your `pom.xml`file:
 <dependency>
     <groupId>io.github.jeemv.springboot.vuejs</groupId>
     <artifactId>springboot-vuejs</artifactId>
-    <version>1.0.2</version>
+    <version>[1.0,)</version>
 </dependency>
 ```
 ## Usage
