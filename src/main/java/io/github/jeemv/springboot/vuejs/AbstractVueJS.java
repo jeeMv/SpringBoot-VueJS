@@ -1,7 +1,11 @@
 package io.github.jeemv.springboot.vuejs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.github.jeemv.springboot.vuejs.parts.VueComputeds;
 import io.github.jeemv.springboot.vuejs.parts.VueData;
+import io.github.jeemv.springboot.vuejs.parts.VueHook;
 import io.github.jeemv.springboot.vuejs.parts.VueMethods;
 import io.github.jeemv.springboot.vuejs.parts.VueWatcher;
 import io.github.jeemv.springboot.vuejs.parts.VueWatchers;
@@ -11,12 +15,14 @@ public abstract class AbstractVueJS {
 	protected VueMethods methods;
 	protected VueComputeds computed;
 	protected VueWatchers watchers;
+	protected Map<String, VueHook> hooks;
 	
 	public AbstractVueJS() {
 		data=new VueData();
 		methods=new VueMethods();
 		computed=new VueComputeds();
 		watchers=new VueWatchers();
+		hooks=new HashMap<>();
 	}
 	
 	protected String wrapScript(String script) {
@@ -36,6 +42,14 @@ public abstract class AbstractVueJS {
 	 */
 	public void addData(String key,Object value) {
 		data.put(key, value);
+	}
+	
+	/**
+	 * Declare a data
+	 * @param key the name of the data
+	 */
+	public void addData(String key) {
+		data.put(key, "");
 	}
 	
 	/**
@@ -184,6 +198,78 @@ public abstract class AbstractVueJS {
 		this.addWatcher(variableName, true, false, handlers);
 	}
 	
+	protected void addHook(String name,String body) {
+		hooks.put(name, new VueHook(body));
+	}
+	
+	/**
+	 * Adds code (body) for the beforeCreate hook
+	 * @param body the code to execute
+	 */
+	public void onBeforeCreate(String body) {
+		addHook("beforeCreate", body);
+	}
+	
+	/**
+	 * Adds code (body) for the created hook
+	 * @param body the code to execute
+	 */
+	public void onCreated(String body) {
+		addHook("created", body);
+	}
+	
+	/**
+	 * Adds code (body) for the beforeMount hook
+	 * @param body the code to execute
+	 */
+	public void onBeforeMount(String body) {
+		addHook("beforeMount", body);
+	}
+	
+	/**
+	 * Adds code (body) for the mounted hook
+	 * @param body the code to execute
+	 */
+	public void onMounted(String body) {
+		addHook("mounted", body);
+	}
+	
+	/**
+	 * Adds code (body) for the beforeUpdate hook
+	 * @param body the code to execute
+	 */
+	public void onBeforeUpdate(String body) {
+		addHook("beforeUpdate", body);
+	}
+	
+	/**
+	 * Adds code (body) for the updated hook
+	 * @param body the code to execute
+	 */
+	public void onUpdated(String body) {
+		addHook("updated", body);
+	}
+	
+	/**
+	 * Adds code (body) for the beforeDestroy hook
+	 * @param body the code to execute
+	 */
+	public void onBeforeDestroy(String body) {
+		addHook("beforeDestroy", body);
+	}
+	
+	/**
+	 * Adds code (body) for the destroyed hook
+	 * @param body the code to execute
+	 */
+	public void onDestroyed(String body) {
+		addHook("destroyed", body);
+	}
+	
+	public Map<String, VueHook> getHooks() {
+		return hooks;
+	}
+
 	/**
 	 * Returns the generated script creating the instance
 	 * @return the generated script (javascript)

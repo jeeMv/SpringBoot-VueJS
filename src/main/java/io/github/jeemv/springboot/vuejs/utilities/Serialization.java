@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import io.github.jeemv.springboot.vuejs.AbstractVueJS;
+import io.github.jeemv.springboot.vuejs.parts.VueHook;
 import io.github.jeemv.springboot.vuejs.parts.VuePart;
 
 public class Serialization {
@@ -46,6 +47,11 @@ public class Serialization {
 		if(!value.getWatchers().isEmpty()) {
 			gen.writeFieldName("watch");
 			gen.writeRawValue(value.getWatchers()+"");
+		}
+		
+		for(Map.Entry<String, VueHook> entry:value.getHooks().entrySet()) {
+			gen.writeFieldName(entry.getKey());
+			gen.writeRawValue(entry.getValue()+"");
 		}
 	}
 }
