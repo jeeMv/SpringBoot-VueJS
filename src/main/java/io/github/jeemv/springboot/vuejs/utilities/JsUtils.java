@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import io.github.jeemv.springboot.vuejs.VueConfig;
 import io.github.jeemv.springboot.vuejs.VueJS;
+import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.components.VueComponent;
 import io.github.jeemv.springboot.vuejs.components.VueProp;
 import io.github.jeemv.springboot.vuejs.parts.VueComputed;
@@ -28,6 +29,7 @@ import io.github.jeemv.springboot.vuejs.serializers.MethodSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.MethodsSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.PropSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.PropsSerializer;
+import io.github.jeemv.springboot.vuejs.serializers.RawObjectSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.VueComponentSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.VueJSSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.WatcherSerializer;
@@ -36,6 +38,7 @@ import io.github.jeemv.springboot.vuejs.serializers.WatchersSerializer;
 public class JsUtils {
 	public static String objectToJSON(Object o) throws JsonProcessingException {
 	    ObjectMapper objectMapper = new ObjectMapper();
+	    objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 	    SimpleModule module = new SimpleModule();
 	    module.addSerializer(VueJS.class, new VueJSSerializer());
 	    module.addSerializer(VueComponent.class, new VueComponentSerializer());
@@ -47,6 +50,7 @@ public class JsUtils {
 	    module.addSerializer(VueWatcher.class, new WatcherSerializer());
 	    module.addSerializer(VueProp.class, new PropSerializer());
 	    module.addSerializer(VueProps.class, new PropsSerializer());
+	    module.addSerializer(RawObject.class, new RawObjectSerializer());
 	    objectMapper.registerModule(module);
 	    if(VueConfig.debug) {
 	    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);

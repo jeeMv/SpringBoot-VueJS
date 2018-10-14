@@ -5,12 +5,25 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 /**
  * Http class for Http requests
  * @author jcheron
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class Http {
 	
+	private static boolean useAxios=false;
+	
+	public static void useAxios() {
+		useAxios=true;
+	}
+	
+	private static String getJsCode() {
+		if(useAxios) {
+			useAxios=false; 
+			return "Vue.prototype.$http = axios;";
+		}
+		return "";
+	}
 	public static String submitForm(String formRef,String action,String successCallback,String errorCallback) {
-		String result=	"let form=this.$refs['"+formRef+"'];"+
+		String result=	getJsCode()+"let form=this.$refs['"+formRef+"'];"+
 						"let formData=form.model;"+request("form.$vnode.data.attrs.method.toLowerCase()", action, "formData", successCallback,errorCallback);
 		return result;
 	}
@@ -44,7 +57,7 @@ public class Http {
 		if(!"".equals(errorCallback) && errorCallback!=null) {
 			error=",function(response) {"+errorCallback+"}";
 		}
-		String result=	"this.$http["+method+"]("+url+", "+data+")" + 
+		String result=getJsCode()+"this.$http["+method+"]("+url+", "+data+")" + 
 						".then(function(response){"+successCallback+"}"+error+");";
 		return result;
 	}
