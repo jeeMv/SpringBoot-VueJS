@@ -140,11 +140,11 @@ public class CompoButton {
 		VueComponent compo=new VueComponent("button-counter");
 		compo.addData("count", 0);
 		compo.setTemplate("<button @click=\"count++\">You clicked me {{ count }} times.</button>");
-		compo.createFile("vueJS/button.js", false);
+		compo.createFile(false);
 	}
 }
 ```
-The generated file is created in `{project-folder}/target/classes/static/vueJS/button.js`
+The generated file is created in `{project-folder}/target/classes/static/vueJS/button-counter.js`
 
 ```javascript
 //Script generated with VueComponent at Thu Oct 11 03:01:09 CEST 2018
@@ -161,9 +161,30 @@ Vue.component('button-counter',{
 Usage:
 
 ```html
+<script src="/vueJS/button-counter.js"></script>
+...
 <button-counter></button-counter>
 ```
-
+### Component with template file
+Templates are easier to create in a file:
+Create the file `/src/main/resources/templates/vueJS/button-counter.html`
+```html
+<button @click="count++">
+	You clicked me {{ count }} times.
+</button>
+```
+Modify the class `CompoButton`:
+```java
+public class CompoButton {
+	public static void main (String[] args) throws java.lang.Exception  {
+		VueComponent compo=new VueComponent("button-counter");
+		compo.addData("count", 0);
+		compo.setDefaultTemplateFile();
+		compo.createFile(false);
+	}
+}
+```
+the generated file is the same, but the method is more convenient.
 
 ## Configuration
 ### VueJS delimiters
