@@ -167,6 +167,7 @@ Usage:
 ```
 ### Component with template file
 Templates are easier to create in a file:
+
 Create the file `/src/main/resources/templates/vueJS/button-counter.html`
 ```html
 <button @click="count++">
