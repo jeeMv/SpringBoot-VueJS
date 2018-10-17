@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.jeemv.springboot.vuejs.AbstractVueJS;
 import io.github.jeemv.springboot.vuejs.VueConfig;
+import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.console.CommandAction;
 import io.github.jeemv.springboot.vuejs.console.CommandPrompt;
 import io.github.jeemv.springboot.vuejs.parts.VueProps;
@@ -106,11 +107,36 @@ public class VueComponent extends AbstractVueJS{
 		}
 	}
 	
+	public VueProp addProp(String name,Object defaultValue) {
+		VueProp prop=this.props.add(name);
+		prop.setDefaultValue(defaultValue);
+		return prop;
+	}
+	
+	public VueProp addPropRaw(String name,String defaultValue) {
+		VueProp prop=this.props.add(name);
+		prop.setDefaultValue(new RawObject(defaultValue));
+		return prop;
+	}
+	
 	public VueProp addProp(String name,String type,boolean required) {
 		VueProp prop=this.props.add(name);
 		prop.setTypes(type);
 		prop.setRequired(required);
 		return prop;
+	}
+	
+	/**
+	 * Adds a mutable property (use mutProperty=value to assign a value)
+	 * @param name then name of the property
+	 * @param type the property type (Object,Array,Function,String,Number,Boolean)
+	 * @param required if true property is required
+	 * @param mutable if true property is mutable
+	 * @return the property added
+	 */
+	public VueProp addProp(String name,String type,boolean required,boolean mutable) {
+		addComputed("mut"+name.substring(0, 1).toUpperCase() + name.substring(1), " return this."+name+";","this.$emit('update:"+name+"', v);");
+		return addProp(name, type, required);
 	}
 	
 	protected void loadTemplateFile(String filename) throws IOException {

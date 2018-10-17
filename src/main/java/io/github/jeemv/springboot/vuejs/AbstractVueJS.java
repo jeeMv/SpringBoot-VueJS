@@ -3,6 +3,7 @@ package io.github.jeemv.springboot.vuejs;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.parts.VueComputeds;
 import io.github.jeemv.springboot.vuejs.parts.VueData;
 import io.github.jeemv.springboot.vuejs.parts.VueHook;
@@ -42,6 +43,15 @@ public abstract class AbstractVueJS {
 	 */
 	public void addData(String key,Object value) {
 		data.put(key, value);
+	}
+	
+	/**
+	 * Adds a data and the exact value without transformation
+	 * @param key the name of the data
+	 * @param value the value
+	 */
+	public void addDataRaw(String key,String value) {
+		data.put(key, new RawObject(value));
 	}
 	
 	/**

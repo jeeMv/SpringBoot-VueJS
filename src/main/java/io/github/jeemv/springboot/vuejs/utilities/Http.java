@@ -11,6 +11,10 @@ public class Http {
 	
 	private static boolean useAxios=false;
 	
+	/**
+	 * Sets axios as library to use
+	 * do not forget to include the corresponding js file
+	 */
 	public static void useAxios() {
 		useAxios=true;
 	}
