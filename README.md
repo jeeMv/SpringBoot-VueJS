@@ -1,5 +1,5 @@
 # SpringBoot-VueJS 
-`SpringBoot-VueJS`adds `VueJS` to a `SpringBoot` Project for Creating Client-Side Application Logic Within Spring Controllers.
+`SpringBoot-VueJS`adds `VueJS` to a `Spring-boot` Project for Creating Client-Side Application Logic Within Spring Controllers.
 ## Maven integration
 Insert the dependency in your `pom.xml`file:
 ```xml
