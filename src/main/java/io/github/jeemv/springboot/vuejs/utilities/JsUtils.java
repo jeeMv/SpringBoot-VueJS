@@ -17,15 +17,21 @@ import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.components.VueComponent;
 import io.github.jeemv.springboot.vuejs.components.VueProp;
+import io.github.jeemv.springboot.vuejs.parts.AbstractVueComposition;
 import io.github.jeemv.springboot.vuejs.parts.VueComputed;
 import io.github.jeemv.springboot.vuejs.parts.VueComputeds;
+import io.github.jeemv.springboot.vuejs.parts.VueDirectives;
+import io.github.jeemv.springboot.vuejs.parts.VueFilters;
 import io.github.jeemv.springboot.vuejs.parts.VueMethod;
 import io.github.jeemv.springboot.vuejs.parts.VueMethods;
 import io.github.jeemv.springboot.vuejs.parts.VueProps;
 import io.github.jeemv.springboot.vuejs.parts.VueWatcher;
 import io.github.jeemv.springboot.vuejs.parts.VueWatchers;
+import io.github.jeemv.springboot.vuejs.serializers.AbstractCompositionSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.ComputedSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.ComputedsSerializer;
+import io.github.jeemv.springboot.vuejs.serializers.DirectivesSerializer;
+import io.github.jeemv.springboot.vuejs.serializers.FiltersSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.MethodSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.MethodsSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.PropSerializer;
@@ -51,6 +57,9 @@ public class JsUtils {
 	    module.addSerializer(VueWatcher.class, new WatcherSerializer());
 	    module.addSerializer(VueProp.class, new PropSerializer());
 	    module.addSerializer(VueProps.class, new PropsSerializer());
+	    module.addSerializer(AbstractVueComposition.class, new AbstractCompositionSerializer());
+	    module.addSerializer(VueDirectives.class, new DirectivesSerializer());
+	    module.addSerializer(VueFilters.class, new FiltersSerializer());
 	    module.addSerializer(RawObject.class, new RawObjectSerializer());
 	    objectMapper.registerModule(module);
 	    if(VueConfig.debug) {
@@ -113,5 +122,15 @@ public class JsUtils {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public static String wrapScript(String script) {
+		if(script==null || "".equals(script)) {
+			return "";
+		}
+		if(!script.startsWith("<script>")) {
+			script="<script>"+script+"</script>";
+		}
+		return script;
 	}
 }

@@ -48,6 +48,15 @@ public class Serialization {
 			gen.writeFieldName("watch");
 			gen.writeRawValue(value.getWatchers()+"");
 		}
+		if(!value.getDirectives().isEmpty()) {
+			gen.writeFieldName("directives");
+			gen.writeRawValue(value.getDirectives()+"");
+		}
+		
+		if(!value.getFilters().isEmpty()) {
+			gen.writeFieldName("filters");
+			gen.writeRawValue(value.getFilters()+"");
+		}
 		
 		for(Map.Entry<String, VueHook> entry:value.getHooks().entrySet()) {
 			gen.writeFieldName(entry.getKey());

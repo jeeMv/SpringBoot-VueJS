@@ -6,6 +6,10 @@ import java.util.Map;
 import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.parts.VueComputeds;
 import io.github.jeemv.springboot.vuejs.parts.VueData;
+import io.github.jeemv.springboot.vuejs.parts.VueDirective;
+import io.github.jeemv.springboot.vuejs.parts.VueDirectives;
+import io.github.jeemv.springboot.vuejs.parts.VueFilter;
+import io.github.jeemv.springboot.vuejs.parts.VueFilters;
 import io.github.jeemv.springboot.vuejs.parts.VueHook;
 import io.github.jeemv.springboot.vuejs.parts.VueMethods;
 import io.github.jeemv.springboot.vuejs.parts.VueWatcher;
@@ -16,6 +20,8 @@ public abstract class AbstractVueJS {
 	protected VueMethods methods;
 	protected VueComputeds computed;
 	protected VueWatchers watchers;
+	protected VueDirectives directives;
+	protected VueFilters filters;
 	protected Map<String, VueHook> hooks;
 	
 	public AbstractVueJS() {
@@ -23,17 +29,9 @@ public abstract class AbstractVueJS {
 		methods=new VueMethods();
 		computed=new VueComputeds();
 		watchers=new VueWatchers();
+		directives=new VueDirectives();
+		filters=new VueFilters();
 		hooks=new HashMap<>();
-	}
-	
-	protected String wrapScript(String script) {
-		if(script==null || "".equals(script)) {
-			return "";
-		}
-		if(!script.startsWith("<script>")) {
-			script="<script>"+script+"</script>";
-		}
-		return script;
 	}
 	
 	/**
@@ -213,6 +211,26 @@ public abstract class AbstractVueJS {
 	}
 	
 	/**
+	 * Adds a new directive in the vue instance
+	 * @param name The directive name
+	 * @return The created directive
+	 */
+	public VueDirective addDirective(String name) {
+		return directives.add(name);
+	}
+	
+	/**
+	 * Adds a new filter in the vue instance
+	 * @param name The filter name
+	 * @param body The method body
+	 * @param args The filter arguments
+	 * @return The created filter
+	 */
+	public VueFilter addFilter(String name,String body,String...args) {
+		return filters.add(name,body,args);
+	}
+	
+	/**
 	 * Adds code (body) for the beforeCreate hook
 	 * @param body the code to execute
 	 */
@@ -298,6 +316,10 @@ public abstract class AbstractVueJS {
 		return computed;
 	}
 
+	public VueDirectives getDirectives() {
+		return directives;
+	}
+
 	@Override
 	public String toString() {
 		return getScript();
@@ -306,4 +328,10 @@ public abstract class AbstractVueJS {
 	public VueWatchers getWatchers() {
 		return watchers;
 	}
+	
+	
+	public VueFilters getFilters() {
+		return filters;
+	}
+	
 }

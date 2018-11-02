@@ -6,17 +6,21 @@ import java.util.Map.Entry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.github.jeemv.springboot.vuejs.components.VueComponent;
+import io.github.jeemv.springboot.vuejs.parts.AbstractVueComposition;
+import io.github.jeemv.springboot.vuejs.parts.VueDirective;
+import io.github.jeemv.springboot.vuejs.parts.VueFilter;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
 /**
  * VueJS instance
  * @author jcheron
- * @version 1.0.0.2
+ * @version 1.0.0.3
  */
 public class VueJS extends AbstractVueJS{
 	protected String el;
 	protected String[] delimiters;
 	protected Map<String,VueComponent> globalComponents;
+	protected Map<String,AbstractVueComposition> globalElements;
 	
 	/**
 	 * @param element the DOM selector for the VueJS application
@@ -26,6 +30,7 @@ public class VueJS extends AbstractVueJS{
 		this.el=element;
 		this.setDelimiters("<%", "%>");
 		globalComponents=new HashMap<>();
+		globalElements=new HashMap<>();
 	}
 	
 	/**
@@ -48,6 +53,9 @@ public class VueJS extends AbstractVueJS{
 			for(Entry<String, VueComponent> entry:globalComponents.entrySet()) {
 				script+=entry.getValue();
 			}
+			for(Entry<String, AbstractVueComposition> entry:globalElements.entrySet()) {
+				script+=entry.getValue().getScript();
+			}
 			script+="new Vue("+JsUtils.objectToJSON(this)+");";
 			return "<script>"+script+"</script>";
 		} catch (JsonProcessingException e) {
@@ -56,10 +64,39 @@ public class VueJS extends AbstractVueJS{
 		return script;
 	}
 	
+	/**
+	 * Adds a new global component
+	 * @param name The component name
+	 * @return The created component
+	 */
 	public VueComponent addGlobalComponent(String name) {
 		VueComponent component= new VueComponent(name);
 		globalComponents.put(name,component);
 		return component;
+	}
+	
+	/**
+	 * Adds a new global directive
+	 * @param name The directive name
+	 * @return The created directive
+	 */
+	public VueDirective addGlobalDirective(String name) {
+		VueDirective directive=new VueDirective(name);
+		globalElements.put(name, directive);
+		return directive;
+	}
+	
+	/**
+	 * Adds a new global filter
+	 * @param name The filter name
+	 * @param body The filter body
+	 * @param args The filter arguments
+	 * @return The created filter
+	 */
+	public VueFilter addGlobalFilter(String name,String body,String...args) {
+		VueFilter filter=new VueFilter(name,body,args);
+		globalElements.put(name, filter);
+		return filter;
 	}
 	
 	public String getEl() {
