@@ -9,6 +9,9 @@ Insert the dependency in your `pom.xml`file:
     <version>[1.0,)</version>
 </dependency>
 ```
+## Documentation
+ - [api documentation](https://api.kobject.net/springBoot-VueJS/)
+
 ## Usage
 
 ### Manual instanciation in a Spring controller
