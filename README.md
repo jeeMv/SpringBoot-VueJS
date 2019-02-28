@@ -208,7 +208,7 @@ You can also generate code to perform ajax queries:
 vue.addMethod("submit",Http.postForm("formRef","console.log('submit datas!')"));
 ```
 ### Other Http methods
-
+HTTP calls from Vue.js to SpringBoot REST backend:
 
 ```java
 vue.addMethod("loadUser",Http.post("user/","userId","console.log(response)"),"userId");
