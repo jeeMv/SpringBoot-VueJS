@@ -42,7 +42,21 @@ import io.github.jeemv.springboot.vuejs.serializers.VueJSSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.WatcherSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.WatchersSerializer;
 
+/**
+ * JsUtils
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 public class JsUtils {
+	
+	/**
+	 * Returns a JSON string from an object, using defined serializers
+	 * @param o the object to parse
+	 * @return the JSON string
+	 * @throws JsonProcessingException
+	 */
 	public static String objectToJSON(Object o) throws JsonProcessingException {
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

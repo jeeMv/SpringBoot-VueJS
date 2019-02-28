@@ -11,6 +11,13 @@ import io.github.jeemv.springboot.vuejs.AbstractVueJS;
 import io.github.jeemv.springboot.vuejs.parts.VueHook;
 import io.github.jeemv.springboot.vuejs.parts.VuePart;
 
+/**
+ * Serialization
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 public class Serialization {
 	
 	public static void serializeParts(VuePart value, JsonGenerator gen, SerializerProvider provider,String keyQuote) throws IOException {

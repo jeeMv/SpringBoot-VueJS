@@ -2,6 +2,13 @@ package io.github.jeemv.springboot.vuejs;
 
 import java.util.Properties;
 
+/**
+ * VueConfig
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 public class VueConfig{
 	private static VueConfig instance;
 	public static boolean debug=false;

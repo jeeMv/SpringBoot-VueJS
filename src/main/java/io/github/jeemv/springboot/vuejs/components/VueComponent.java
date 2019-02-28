@@ -21,10 +21,13 @@ import io.github.jeemv.springboot.vuejs.console.CommandPrompt;
 import io.github.jeemv.springboot.vuejs.parts.VueProps;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+
 /**
  * VueJS component class
- * @author jcheron
- * @version 1.0.0.0
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.0
+ *
  */
 public class VueComponent extends AbstractVueJS{
 	private String name;

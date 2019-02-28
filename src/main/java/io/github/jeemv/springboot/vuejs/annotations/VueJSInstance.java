@@ -8,10 +8,12 @@ import java.lang.annotation.Target;
 
 /**
  * VueJSInstance annotation
+ * This class is part of spring-boot-vuejs
  * inject an instance of VueJS initialized from the parameters selector and modelName. 
  * The annotated method must take the ModelMap and VueJS type parameters at the last position.
- * @author jcheron
+ * @author jc
  * @since 1.0.2
+ *
  */
 @Target(value={ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

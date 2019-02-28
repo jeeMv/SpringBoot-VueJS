@@ -11,10 +11,13 @@ import io.github.jeemv.springboot.vuejs.parts.VueDirective;
 import io.github.jeemv.springboot.vuejs.parts.VueFilter;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+
 /**
  * VueJS instance
- * @author jcheron
- * @version 1.0.0.3
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.3
+ *
  */
 public class VueJS extends AbstractVueJS{
 	protected String el;

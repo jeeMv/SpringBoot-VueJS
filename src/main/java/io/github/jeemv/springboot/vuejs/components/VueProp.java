@@ -10,8 +10,10 @@ import io.github.jeemv.springboot.vuejs.parts.VueMethod;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
 /**
- * Represents a ViewJS property for Components
- * @author jcheron
+ * Represents a VueJS property for Components
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.0
  *
  */
 public class VueProp {

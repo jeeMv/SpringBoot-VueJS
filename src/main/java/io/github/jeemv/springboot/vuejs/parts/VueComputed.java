@@ -1,5 +1,13 @@
 package io.github.jeemv.springboot.vuejs.parts;
 
+/**
+ * VueComputed 
+ * represents a computed property
+ * This class is part of springBoot-VueJS
+ * @author jc
+ * @version 1.0.0
+ *
+ */
 public class VueComputed {
 	private String get;
 	private String set;
