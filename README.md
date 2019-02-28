@@ -194,3 +194,29 @@ For changing the plain text interpolation delimiters and avoid conflict with oth
 ```java
 vue.setDelimiters("{!","!}");
 ```
+
+## Http methods
+
+You can also generate code to perform ajax queries:
+
+### Submit a form
+
+```java
+vue.addMethod("submit",Http.postForm("formRef","console.log('submit datas!')"));
+```
+### Other Http methods
+
+
+```java
+vue.addMethod("loadUser",Http.post("user/","userId","console.log(response)"),"userId");
+```
+
+### Configuration
+
+Using Axios:
+
+```java
+Http.useAxios();
+```
+
+Do not forget to include the corresponding js file.
