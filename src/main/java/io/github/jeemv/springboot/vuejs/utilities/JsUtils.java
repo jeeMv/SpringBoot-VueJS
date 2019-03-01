@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import io.github.jeemv.springboot.vuejs.VueConfig;
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.components.VueComponent;
 import io.github.jeemv.springboot.vuejs.components.VueProp;
+import io.github.jeemv.springboot.vuejs.configuration.VueConfig;
 import io.github.jeemv.springboot.vuejs.parts.AbstractVueComposition;
 import io.github.jeemv.springboot.vuejs.parts.VueComputed;
 import io.github.jeemv.springboot.vuejs.parts.VueComputeds;

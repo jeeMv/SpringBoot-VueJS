@@ -9,24 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  */
 public class Http {
 	
-	private static boolean useAxios=false;
-	
-	/**
-	 * Sets axios as library to use
-	 * do not forget to include the corresponding js file
-	 */
-	public static void useAxios() {
-		useAxios=true;
-	}
-	
-	private static String getJsCode() {
-		if(useAxios) {
-			useAxios=false; 
-			return "Vue.prototype.$http = axios;";
-		}
-		return "";
-	}
-	
 	/**
 	 * Submits an existing form
 	 * @param formRef the Vuejs form ref
@@ -36,7 +18,7 @@ public class Http {
 	 * @return
 	 */
 	public static String submitForm(String formRef,String action,String successCallback,String errorCallback) {
-		String result=	getJsCode()+"let form=this.$refs['"+formRef+"'];"+
+		String result="let form=this.$refs['"+formRef+"'];"+
 						"let formData=form.model;"+request("form.$vnode.data.attrs.method.toLowerCase()", action, "formData", successCallback,errorCallback);
 		return result;
 	}
@@ -86,7 +68,7 @@ public class Http {
 		if(!"".equals(errorCallback) && errorCallback!=null) {
 			error=",function(response) {"+errorCallback+"}";
 		}
-		String result=getJsCode()+"this.$http["+method+"]("+url+", "+data+")" + 
+		String result="this.$http["+method+"]("+url+", "+data+")" + 
 						".then(function(response){"+successCallback+"}"+error+");";
 		return result;
 	}

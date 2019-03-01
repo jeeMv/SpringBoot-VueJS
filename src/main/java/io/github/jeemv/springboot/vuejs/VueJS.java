@@ -3,9 +3,19 @@ package io.github.jeemv.springboot.vuejs;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.github.jeemv.springboot.vuejs.components.VueComponent;
+import io.github.jeemv.springboot.vuejs.configuration.VueJSAutoConfiguration;
+import io.github.jeemv.springboot.vuejs.configuration.VueJSProperties;
 import io.github.jeemv.springboot.vuejs.parts.AbstractVueComposition;
 import io.github.jeemv.springboot.vuejs.parts.VueDirective;
 import io.github.jeemv.springboot.vuejs.parts.VueFilter;
@@ -19,11 +29,31 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
  * @version 1.0.3
  *
  */
+@Component
 public class VueJS extends AbstractVueJS{
 	protected String el;
 	protected String[] delimiters;
+	protected boolean useAxios;
 	protected Map<String,VueComponent> globalComponents;
 	protected Map<String,AbstractVueComposition> globalElements;
+	
+	@Autowired(required = false)
+	protected VueJSAutoConfiguration vueJSAutoConfiguration;
+	private Logger logger;
+	
+	@PostConstruct
+    public void init() {
+        if (null == vueJSAutoConfiguration) {
+            logger.debug("VueJS configuration not yet loaded");
+        } else {
+        	VueJSProperties vueJSProperties=vueJSAutoConfiguration.getVueJSProperties();
+            setDelimiters(vueJSProperties.getPrefix(), vueJSProperties.getPostfix());
+            if(vueJSProperties.isUseAxios()) {
+            	useAxios=true;
+            }
+            el=vueJSProperties.getEl();
+        }
+    }
 	
 	/**
 	 * @param element the DOM selector for the VueJS application
@@ -31,9 +61,16 @@ public class VueJS extends AbstractVueJS{
 	public VueJS(String element) {
 		super();
 		this.el=element;
-		this.setDelimiters("<%", "%>");
 		globalComponents=new HashMap<>();
 		globalElements=new HashMap<>();
+		logger = LoggerFactory.getLogger(VueJS.class);
+	}
+	
+	/**
+	 * Starts the VueJS app with v-app element
+	 */
+	public VueJS() {
+		this("v-app");
 	}
 	
 	/**
@@ -52,6 +89,9 @@ public class VueJS extends AbstractVueJS{
 	@Override
 	public String getScript() {
 		String script="";
+		if(useAxios) {
+			script="Vue.prototype.$http = axios;\n";
+		}
 		try {
 			for(Entry<String, VueComponent> entry:globalComponents.entrySet()) {
 				script+=entry.getValue();
@@ -113,6 +153,14 @@ public class VueJS extends AbstractVueJS{
 
 	public void setEl(String el) {
 		this.el = el;
+	}
+
+	/**
+	 * Sets axios as library to use for $http
+	 * do not forget to include the corresponding js file
+	 */
+	public void setUseAxios(boolean useAxios) {
+		this.useAxios = useAxios;
 	}
 
 }

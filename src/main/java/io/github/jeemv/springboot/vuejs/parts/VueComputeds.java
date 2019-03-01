@@ -1,6 +1,6 @@
 package io.github.jeemv.springboot.vuejs.parts;
 
-import io.github.jeemv.springboot.vuejs.VueConfig;
+import io.github.jeemv.springboot.vuejs.configuration.VueConfig;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
 public class VueComputeds extends VuePart {

@@ -38,8 +38,10 @@ public class JsonHelper {
 		StringBuilder result=new StringBuilder();
 		result.append('[');
 		int limit=values.length;
+		String prefix="";
 		while(pos<limit) {
-			result.append(asObject()+",");
+			result.append(prefix+asObject());
+			prefix=",";
 		}
 		result.append(']');
 		return result.toString();
@@ -54,9 +56,12 @@ public class JsonHelper {
 		int i;
 		int nb=keys.length;
 		int limit=values.length;
+		String prefix="";
 		for(i=0;i<nb && i+pos<limit;i++) {
-			result.append(keys[i]+":"+quoteValue(values[i+pos]));
+			result.append(prefix+keys[i]+":"+quoteValue(values[i+pos]));
+			prefix=",";
 		}
+		result.delete(result.length() - 1, result.length());
 		pos+=i;
 		result.append('}');
 		return result.toString();
