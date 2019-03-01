@@ -46,7 +46,7 @@ Mustache view use double mustache for variables (message in the example), so the
 The `vue` variable generates the javascript code for the view instance creation. The triple mustache `{{{vue}}}`is use for javascript/html code unescaping.
 
 #### With @AutoWired annotation
-This technique has the advantage of providing a globale instance of view JS for all the actions of a controller:
+This technique has the advantage of providing a globale instance of VueJS for all the actions of a controller:
 ```java
 @Controller
 @RequestMapping("/ui/")
