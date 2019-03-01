@@ -45,6 +45,31 @@ Mustache view use double mustache for variables (message in the example), so the
 
 The `vue` variable generates the javascript code for the view instance creation. The triple mustache `{{{vue}}}`is use for javascript/html code unescaping.
 
+#### With @AutoWired annotation
+This technique has the advantage of providing a globale instance of view JS for all the actions of a controller:
+```java
+@Controller
+@RequestMapping("/ui/")
+public class UiTest {
+
+	@AutoWired
+	private WueJS vue;
+	
+	@GetMapping("test")
+	public String index(ModelMap model) {
+		vue.addData("message", "Hello world!");
+		model.put("vue", vue);
+		return "index";
+	}
+}
+```
+In this case, you can directly configure **VueJS** in the **application.properties** file:
+
+```bash
+springboot.vuejs.delimiters=<%,%>
+springboot.vuejs.axios=true
+springboot.vuejs.el=v-app
+```
 
 #### With @ModelAttribute annotation
 
@@ -214,15 +239,8 @@ vue.addMethod("submit",Http.postForm("formRef","console.log('submit datas!')"));
 HTTP calls from Vue.js to SpringBoot REST backend:
 
 ```java
-vue.addMethod("loadUser",Http.post("user/","userId","console.log(response)"),"userId");
+vue.addMethod("saveUser",Http.post("user/","user","console.log('User added!')"),"user");
+vue.addMethod("updateUser",Http.put("user/","user","console.log('User updated!')"),"user");
 ```
 
-### Configuration
-
-Using Axios:
-
-```java
-Http.useAxios();
-```
-
-Do not forget to include the corresponding js file.
+For axios, Do not forget to include the corresponding js file.
