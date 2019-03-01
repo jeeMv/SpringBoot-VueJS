@@ -53,7 +53,7 @@ This technique has the advantage of providing a globale instance of view JS for 
 public class UiTest {
 
 	@AutoWired
-	private WueJS vue;
+	private VueJS vue;
 	
 	@GetMapping("test")
 	public String index(ModelMap model) {
@@ -73,7 +73,7 @@ springboot.vuejs.el=v-app
 
 #### With @ModelAttribute annotation
 
-It is possible to avoid instantiation, and the passage of the variable to the view :
+For a more punctual use, in a single method for example, It is possible to use the **@ModelAttribute** annotation :
 
 ```java
 @Controller
