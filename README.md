@@ -46,7 +46,17 @@ Mustache view use double mustache for variables (message in the example), so the
 The `vue` variable generates the javascript code for the view instance creation. The triple mustache `{{{vue}}}`is use for javascript/html code unescaping.
 
 #### With @AutoWired annotation
-This technique has the advantage of providing a globale instance of VueJS for all the actions of a controller:
+This technique has the advantage of providing a globale instance of VueJS for all the actions of a controller.
+Create a configuration class to allow the autowiring of **VueJS**:
+
+```java
+@Configuration
+@ComponentScan("io.github.jeemv.springboot.vuejs")
+public class AppConfiguration {
+}
+```
+In your controller:
+
 ```java
 @Controller
 @RequestMapping("/ui/")
