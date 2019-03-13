@@ -185,7 +185,7 @@ public class CompoButton {
 	}
 }
 ```
-The generated file is created in `{project-folder}/target/classes/static/vueJS/button-counter.js`
+The generated file is created in `{project-folder}/src/main/resources/static/vueJS/button-counter.js`
 
 ```javascript
 //Script generated with VueComponent at Thu Oct 11 03:01:09 CEST 2018

@@ -26,7 +26,7 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
  * VueJS component class
  * This class is part of springBoot-VueJS
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 public class VueComponent extends AbstractVueJS{
@@ -161,8 +161,8 @@ public class VueComponent extends AbstractVueJS{
 	 * @throws IOException for file creation
 	 */
 	public void createFile(String pathFilename,boolean minify) throws IOException {
-		Resource resource = new ClassPathResource("static/");
-		File f=new File(resource.getFile().getAbsolutePath().toString()+"\\"+pathFilename);
+		File resource = new File("src/main/resources/static/");
+		File f=new File(resource.getAbsolutePath().toString()+"\\"+pathFilename);
 		f.getParentFile().mkdirs();
 		if(f.exists()) {
 			Scanner sc=new Scanner(System.in);
