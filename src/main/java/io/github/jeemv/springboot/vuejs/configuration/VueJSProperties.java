@@ -15,6 +15,8 @@ public class VueJSProperties {
     private String[] delimiters;
     private boolean axios;
     private String el;
+    
+    private boolean vuetify;
 
 	public String[] getDelimiters() {
 		return delimiters;
@@ -60,12 +62,12 @@ public class VueJSProperties {
 	public void setAxios(boolean axios) {
 		this.axios = axios;
 	}
-	
-/*	private boolean isBooleanTrue(String value,boolean dValue) {
-		if(value==null) {
-			return dValue;
-		}
-		return "1".equals(value) || "true".equals(value);
+
+	public boolean isVuetify() {
+		return vuetify;
 	}
-	*/
+
+	public void setVuetify(boolean vuetify) {
+		this.vuetify = vuetify;
+	}
 }

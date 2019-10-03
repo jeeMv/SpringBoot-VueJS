@@ -34,6 +34,7 @@ public class VueJS extends AbstractVueJS{
 	protected String el;
 	protected String[] delimiters;
 	protected boolean useAxios;
+	protected boolean vuetify;
 	protected Map<String,VueComponent> globalComponents;
 	protected Map<String,AbstractVueComposition> globalElements;
 	
@@ -50,6 +51,9 @@ public class VueJS extends AbstractVueJS{
             setDelimiters(vueJSProperties.getPrefix(), vueJSProperties.getPostfix());
             if(vueJSProperties.isUseAxios()) {
             	useAxios=true;
+            }
+            if(vueJSProperties.isVuetify()) {
+            	vuetify=true;
             }
             el=vueJSProperties.getEl();
         }
@@ -161,6 +165,10 @@ public class VueJS extends AbstractVueJS{
 	 */
 	public void setUseAxios(boolean useAxios) {
 		this.useAxios = useAxios;
+	}
+
+	public boolean isVuetify() {
+		return vuetify;
 	}
 
 }

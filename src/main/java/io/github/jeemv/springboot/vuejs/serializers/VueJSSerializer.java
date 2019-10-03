@@ -27,6 +27,10 @@ public class VueJSSerializer extends StdSerializer<VueJS> {
 	public void serialize(VueJS value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 		gen.writeStartObject();
         gen.writeStringField("el", value.getEl());
+        if(value.isVuetify()) {
+        	gen.writeFieldName("vuetify");
+        	gen.writeRawValue("new Vuetify()");
+        }
         gen.writeArrayFieldStart("delimiters");
         for (String arg: value.getDelimiters()) {
             gen.writeString(arg);
