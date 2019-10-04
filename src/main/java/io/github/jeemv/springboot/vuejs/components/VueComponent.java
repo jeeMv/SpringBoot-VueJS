@@ -7,12 +7,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import io.github.jeemv.springboot.vuejs.AbstractVueJS;
 import io.github.jeemv.springboot.vuejs.beans.RawObject;
 import io.github.jeemv.springboot.vuejs.configuration.VueConfig;
@@ -34,6 +42,7 @@ public class VueComponent extends AbstractVueJS{
 	private String template;
 	private boolean internal;
 	private VueProps props;
+	private static final String ROOT_FOLDER="src/main/resources/static/";
 	
 	public VueComponent() {
 		this(null,true);
@@ -161,7 +170,7 @@ public class VueComponent extends AbstractVueJS{
 	 * @throws IOException for file creation
 	 */
 	public void createFile(String pathFilename,boolean minify) throws IOException {
-		File resource = new File("src/main/resources/static/");
+		File resource = new File(ROOT_FOLDER);
 		File f=new File(resource.getAbsolutePath().toString()+"\\"+pathFilename);
 		f.getParentFile().mkdirs();
 		if(f.exists()) {
@@ -196,9 +205,7 @@ public class VueComponent extends AbstractVueJS{
 			if(!minify) {
 				contents=JsUtils.cleanJS(contents);
 			}
-	        writer.write(contents);
-	        System.out.println("Script generated in "+f.getCanonicalPath());
-	        System.out.println("Insert <script src=\"/"+pathFilename+"\"></script> in html file to use it.");
+	        writeInfile(f, pathFilename, contents, "Script generated in "+f.getCanonicalPath()+"\r\nInsert <script src=\"/"+pathFilename+"\"></script> in html file to use it.");
 		}finally{
 			try{
 				if ( writer != null)
@@ -207,7 +214,60 @@ public class VueComponent extends AbstractVueJS{
 		}
 	}
 	
-	private String addGenerated() {
-		return "//Script generated with "+this.getClass().getSimpleName()+" at "+new Date()+"\r\n";
+	private static void writeInfile(File f,String pathFilename,String contents,String consoleMessages) throws IOException {
+		Writer writer=null;
+		try {
+			writer = new BufferedWriter(new FileWriter(f));
+			writer.write(contents);
+	        System.out.println(consoleMessages);
+		}finally{
+			try{
+				if ( writer != null)
+					writer.close( );
+			}catch ( IOException e){}
+		}
+	}
+	
+	private static String addGenerated() {
+		return "//Script generated with "+VueComponent.class.getSimpleName()+" at "+new Date()+"\r\n";
+	}
+	
+	public static void globalJs() {
+		File resource = new File(ROOT_FOLDER);
+		String path=resource.getAbsolutePath().toString()+"/"+VueConfig.getComponentFolder();
+		try (Stream<Path> walk = Files.walk(Paths.get(path))) {
+
+			List<String> result = walk.map(x -> x.toString())
+					.filter(f -> f.endsWith(".js")).collect(Collectors.toList());
+
+			globalJs(result.toArray(new String[0]));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void globalJs(String...files ) throws IOException {
+		StringBuilder sb = new StringBuilder("");
+		for(int i=0;i<files.length;i++) {
+			File f=new File(files[i]);
+			if(f.exists() && !f.getName().equals("components.js")) {
+				Scanner scanner = new Scanner(f);
+				while (scanner.hasNextLine()) {
+					String line=scanner.nextLine();
+					if(!line.startsWith("//")) {
+						sb.append(line+"\r\n");
+					}
+				}
+				scanner.close();
+			}
+		}
+		if(files.length>0) {
+			sb.append(addGenerated());
+			String pathFilename=VueConfig.getComponentFolder()+"/components.js";
+			File resource = new File(ROOT_FOLDER);
+			File f=new File(resource.getAbsolutePath().toString()+"\\"+pathFilename);
+			writeInfile(f, pathFilename, sb.toString(), "Script generated in "+f.getCanonicalPath()+"\r\nInsert <script src=\"/"+pathFilename+"\"></script> in html file to use it.");
+		}else
+			System.out.println("No files to parse.");
 	}
 }
