@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Http class for Http requests
- * @author jcheron
+ * @author jcheron myaddressmail@gmail.com
  * @version 1.0.2
  */
 public class Http {

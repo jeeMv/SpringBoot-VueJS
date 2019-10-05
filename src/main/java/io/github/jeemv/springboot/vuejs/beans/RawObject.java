@@ -4,7 +4,7 @@ package io.github.jeemv.springboot.vuejs.beans;
 /**
  * RawObject
  * This class is part of spring-boot-vuejs
- * @author jc
+ * @author jcheron myaddressmail@gmail.com
  * @version 1.0.0
  *
  */

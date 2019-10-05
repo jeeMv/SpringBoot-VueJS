@@ -9,6 +9,13 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import io.github.jeemv.springboot.vuejs.components.VueProp;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+/**
+ * PropSerializer
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class PropSerializer extends StdSerializer<VueProp> {
 	
 	/**

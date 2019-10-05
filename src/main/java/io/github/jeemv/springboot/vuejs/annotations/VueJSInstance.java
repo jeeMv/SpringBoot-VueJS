@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * This class is part of spring-boot-vuejs
  * inject an instance of VueJS initialized from the parameters selector and modelName. 
  * The annotated method must take the ModelMap and VueJS type parameters at the last position.
- * @author jc
+ * @author jcheron myaddressmail@gmail.com
  * @since 1.0.2
  *
  */

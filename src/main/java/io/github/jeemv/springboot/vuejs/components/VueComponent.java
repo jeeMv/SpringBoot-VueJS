@@ -33,6 +33,7 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 /**
  * VueJS component class
  * This class is part of springBoot-VueJS
+ * Components are create in src/main/resources/static/
  * @author jc
  * @version 1.0.1
  *
@@ -84,10 +85,18 @@ public class VueComponent extends AbstractVueJS{
 		return template;
 	}
 
+	/**
+	 * Defines the template string
+	 * @param template
+	 */
 	public void setTemplate(String template) {
 		this.template = template;
 	}
 	
+	/**
+	 * Sets a template file
+	 * @param pathFilename
+	 */
 	public void setTemplateFile(String pathFilename) {
 		try {
 			loadTemplateFile("templates/"+pathFilename);
@@ -97,6 +106,9 @@ public class VueComponent extends AbstractVueJS{
 		}
 	}
 	
+	/**
+	 * Sets the default template file (componentName+".html")
+	 */
 	public void setDefaultTemplateFile() {
 		setTemplateFile(VueConfig.getTemplateComponentFolder()+"/"+name+".html");
 	}
@@ -105,6 +117,10 @@ public class VueComponent extends AbstractVueJS{
 		return internal;
 	}
 
+	/**
+	 * Defines if the component is created in the vue instance or not
+	 * @param internal
+	 */
 	public void setInternal(boolean internal) {
 		this.internal = internal;
 	}
@@ -113,24 +129,48 @@ public class VueComponent extends AbstractVueJS{
 		return props;
 	}
 
+	/**
+	 * Sets the component properties
+	 * @param props
+	 */
 	public void setProps(String...props) {
 		for(String prop:props) {
 			this.props.add(prop);
 		}
 	}
 	
+	/**
+	 * Adds a new property to the component
+	 * @param name The property name
+	 * @param defaultValue The property default value
+	 * @return
+	 */
 	public VueProp addProp(String name,Object defaultValue) {
 		VueProp prop=this.props.add(name);
 		prop.setDefaultValue(defaultValue);
 		return prop;
 	}
 	
+	/**
+	 * Adds a new property to the component
+	 * defaultValue is not quoted (because it's a raw property)
+	 * @param name The property name
+	 * @param defaultValue non quoted value
+	 * @return
+	 */
 	public VueProp addPropRaw(String name,String defaultValue) {
 		VueProp prop=this.props.add(name);
 		prop.setDefaultValue(new RawObject(defaultValue));
 		return prop;
 	}
 	
+	/**
+	 * Adds a required property to the component
+	 * @param name The property name
+	 * @param type The property type
+	 * @param required true if the property is required
+	 * @return
+	 */
 	public VueProp addProp(String name,String type,boolean required) {
 		VueProp prop=this.props.add(name);
 		prop.setTypes(type);

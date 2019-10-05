@@ -10,6 +10,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.jeemv.springboot.vuejs.components.VueProp;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+/**
+ * VueProps
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class VueProps extends VuePart {
 	
 	public VueProp add(String name) {

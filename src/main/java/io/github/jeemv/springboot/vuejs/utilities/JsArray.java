@@ -5,7 +5,7 @@ package io.github.jeemv.springboot.vuejs.utilities;
  * JsArray
  * Javascript array utilities
  * This class is part of springBoot-VueJS
- * @author jc
+ * @author jcheron myaddressmail@gmail.com
  * @version 1.0.0
  *
  */

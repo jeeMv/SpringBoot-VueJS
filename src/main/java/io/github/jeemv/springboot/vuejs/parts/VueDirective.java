@@ -1,16 +1,40 @@
 package io.github.jeemv.springboot.vuejs.parts;
 
+/**
+ * VueDirective
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class VueDirective extends AbstractVueComposition{
 	protected VueMethods methods;
+	protected VueMethod shortHand;
 	
 	public VueDirective() {
 		super();
 		methods=new VueMethods();
 	}
 
+	/**
+	 * @param name The directive name (ex: demo for v-demo directive)
+	 */
 	public VueDirective(String name) {
 		super(name);
 		methods=new VueMethods();
+	}
+	
+	/**
+	 * @param name The directive name
+	 * @param shortHand Same behavior on bind and update, but don’t care about the other hooks
+	 */
+	public VueDirective(String name,String shortHand) {
+		super(name);
+		setShortHand(shortHand);
+	}
+	
+	public void setShortHand(String shortHand) {
+		this.shortHand=new VueMethod(shortHand,"el","binding","vnode");
 	}
 
 	/**
@@ -66,6 +90,13 @@ public class VueDirective extends AbstractVueComposition{
 		return on("unbind", body);
 	}
 	
+	/**
+	 * Adds an event in the directive
+	 * 
+	 * @param event The associated event
+	 * @param body The javascript code associated
+	 * @return
+	 */
 	protected VueDirective on(String event,String body) {
 		methods.add(event, body, "el", "binding", "vnode");
 		return this;
@@ -73,11 +104,21 @@ public class VueDirective extends AbstractVueComposition{
 
 	@Override
 	public String toString() {
+		if(shortHand instanceof VueMethod) {
+			return shortHand.toString();
+		}
 		return methods.toString();
 	}
 
 	@Override
 	public String getType() {
 		return "directive";
+	}
+	
+	/**
+	 * To also detect nested value changes inside Objects
+	 */
+	public void setDeep() {
+		methods.addProperty("deep", true);
 	}
 }

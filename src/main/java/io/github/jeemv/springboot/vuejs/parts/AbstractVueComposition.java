@@ -2,6 +2,13 @@ package io.github.jeemv.springboot.vuejs.parts;
 
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+/**
+ * AbstractVueComposition
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public abstract class AbstractVueComposition {
 	protected String name;
 	protected boolean internal;

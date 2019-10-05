@@ -14,7 +14,7 @@ import io.github.jeemv.springboot.vuejs.parts.VuePart;
 /**
  * Serialization
  * This class is part of springBoot-VueJS
- * @author jc
+ * @author jcheron myaddressmail@gmail.com
  * @version 1.0.0
  *
  */

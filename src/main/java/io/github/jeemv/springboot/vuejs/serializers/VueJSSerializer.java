@@ -9,6 +9,13 @@ import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.utilities.Serialization;
 
 
+/**
+ * VueJSSerializer
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class VueJSSerializer extends StdSerializer<VueJS> {
 	/**
 	 * 

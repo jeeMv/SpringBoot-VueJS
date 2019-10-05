@@ -15,6 +15,13 @@ import io.github.jeemv.springboot.vuejs.parts.VueMethods;
 import io.github.jeemv.springboot.vuejs.parts.VueWatcher;
 import io.github.jeemv.springboot.vuejs.parts.VueWatchers;
 
+/**
+ * AbstractVueJS
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public abstract class AbstractVueJS {
 	protected VueData data;
 	protected VueMethods methods;
@@ -217,6 +224,16 @@ public abstract class AbstractVueJS {
 	 */
 	public VueDirective addDirective(String name) {
 		return directives.add(name);
+	}
+	
+	/**
+	 * Adds a new directive in the vue instance
+	 * @param name The directive name
+	 * @param shortHand Shorthand function for bind and update
+	 * @return The created directive
+	 */
+	public VueDirective addDirective(String name,String shortHand) {
+		return directives.add(name,shortHand);
 	}
 	
 	/**

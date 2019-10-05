@@ -1,5 +1,12 @@
 package io.github.jeemv.springboot.vuejs.parts;
 
+/**
+ * VueFilter
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class VueFilter extends AbstractVueComposition{
 	protected VueMethod method;
 	

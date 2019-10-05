@@ -7,6 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+/**
+ * VuePart
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public abstract class VuePart {
 	protected Map<String, Object> elements;
 	public VuePart() {

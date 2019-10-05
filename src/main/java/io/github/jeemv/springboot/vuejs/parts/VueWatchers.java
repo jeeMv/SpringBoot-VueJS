@@ -3,6 +3,13 @@ package io.github.jeemv.springboot.vuejs.parts;
 import io.github.jeemv.springboot.vuejs.configuration.VueConfig;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
+/**
+ * VueWatchers
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class VueWatchers extends VuePart {
 	
 	public void add(String variableName,String methodName,boolean deep,boolean immediate) {

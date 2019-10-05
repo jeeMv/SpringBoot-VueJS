@@ -25,7 +25,7 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 /**
  * VueJS instance
  * This class is part of springBoot-VueJS
- * @author jc
+ * @author jcheron myaddressmail@gmail.com
  * @version 1.0.3
  *
  */

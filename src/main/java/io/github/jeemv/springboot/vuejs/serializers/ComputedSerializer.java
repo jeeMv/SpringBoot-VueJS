@@ -8,6 +8,13 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import io.github.jeemv.springboot.vuejs.parts.VueComputed;
 
+/**
+ * ComputedSerializer
+ * This class is part of springBoot-VueJS
+ * @author jcheron myaddressmail@gmail.com
+ * @version 1.0.0
+ *
+ */
 public class ComputedSerializer extends StdSerializer<VueComputed> {
 	
 	/**
