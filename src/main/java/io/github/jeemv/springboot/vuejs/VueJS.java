@@ -21,131 +21,135 @@ import io.github.jeemv.springboot.vuejs.parts.VueDirective;
 import io.github.jeemv.springboot.vuejs.parts.VueFilter;
 import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 
-
 /**
- * VueJS instance
- * This class is part of springBoot-VueJS
+ * VueJS instance This class is part of springBoot-VueJS
+ * 
  * @author jcheron myaddressmail@gmail.com
  * @version 1.0.3
  *
  */
 @Component
-public class VueJS extends AbstractVueJS{
+public class VueJS extends AbstractVueJS {
 	protected String el;
 	protected String[] delimiters;
 	protected boolean useAxios;
 	protected boolean vuetify;
-	protected Map<String,VueComponent> globalComponents;
-	protected Map<String,AbstractVueComposition> globalElements;
-	
+	protected Map<String, VueComponent> globalComponents;
+	protected Map<String, AbstractVueComposition> globalElements;
+
 	@Autowired(required = false)
 	protected VueJSAutoConfiguration vueJSAutoConfiguration;
 	private Logger logger;
-	
+
 	@PostConstruct
-    public void init() {
-        if (null == vueJSAutoConfiguration) {
-            logger.debug("VueJS configuration not yet loaded");
-        } else {
-        	VueJSProperties vueJSProperties=vueJSAutoConfiguration.getVueJSProperties();
-            setDelimiters(vueJSProperties.getPrefix(), vueJSProperties.getPostfix());
-            if(vueJSProperties.isUseAxios()) {
-            	useAxios=true;
-            }
-            if(vueJSProperties.isVuetify()) {
-            	vuetify=true;
-            }
-            el=vueJSProperties.getEl();
-        }
-    }
-	
+	public void init() {
+		if (null == vueJSAutoConfiguration) {
+			logger.debug("VueJS configuration not yet loaded");
+		} else {
+			VueJSProperties vueJSProperties = vueJSAutoConfiguration.getVueJSProperties();
+			setDelimiters(vueJSProperties.getPrefix(), vueJSProperties.getPostfix());
+			if (vueJSProperties.isUseAxios()) {
+				useAxios = true;
+			}
+			if (vueJSProperties.isVuetify()) {
+				vuetify = true;
+			}
+			el = vueJSProperties.getEl();
+		}
+	}
+
 	/**
 	 * @param element the DOM selector for the VueJS application
 	 */
 	public VueJS(String element) {
 		super();
-		this.el=element;
-		globalComponents=new HashMap<>();
-		globalElements=new HashMap<>();
+		this.el = element;
+		globalComponents = new HashMap<>();
+		globalElements = new HashMap<>();
 		logger = LoggerFactory.getLogger(VueJS.class);
 	}
-	
+
 	/**
 	 * Starts the VueJS app with v-app element
 	 */
 	public VueJS() {
 		this("v-app");
 	}
-	
+
 	/**
 	 * Defines the element delimiters (&lt;% %&gt;)
+	 * 
 	 * @param start default: &lt;%
-	 * @param end default: %&gt;
+	 * @param end   default: %&gt;
 	 */
-	public void setDelimiters(String start,String end) {
-		delimiters= new String[] {start,end};
+	public void setDelimiters(String start, String end) {
+		delimiters = new String[] { start, end };
 	}
-	
+
 	/**
 	 * Returns the generated script creating the VueJS instance
+	 * 
 	 * @return the generated script (javascript)
 	 */
 	@Override
 	public String getScript() {
-		String script="";
-		if(useAxios) {
-			script="Vue.prototype.$http = axios;\n";
+		String script = "";
+		if (useAxios) {
+			script = "Vue.prototype.$http = axios;\n";
 		}
 		try {
-			for(Entry<String, VueComponent> entry:globalComponents.entrySet()) {
-				script+=entry.getValue();
+			for (Entry<String, VueComponent> entry : globalComponents.entrySet()) {
+				script += entry.getValue();
 			}
-			for(Entry<String, AbstractVueComposition> entry:globalElements.entrySet()) {
-				script+=entry.getValue().getScript();
+			for (Entry<String, AbstractVueComposition> entry : globalElements.entrySet()) {
+				script += entry.getValue().getScript();
 			}
-			script+="new Vue("+JsUtils.objectToJSON(this)+");";
-			return "<script>"+script+"</script>";
+			script += "new Vue(" + JsUtils.objectToJSON(this) + ");";
+			return "<script>" + script + "</script>";
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 		return script;
 	}
-	
+
 	/**
 	 * Adds a new global component
+	 * 
 	 * @param name The component name
 	 * @return The created component
 	 */
 	public VueComponent addGlobalComponent(String name) {
-		VueComponent component= new VueComponent(name);
-		globalComponents.put(name,component);
+		VueComponent component = new VueComponent(name);
+		globalComponents.put(name, component);
 		return component;
 	}
-	
+
 	/**
 	 * Adds a new global directive
+	 * 
 	 * @param name The directive name
 	 * @return The created directive
 	 */
 	public VueDirective addGlobalDirective(String name) {
-		VueDirective directive=new VueDirective(name);
+		VueDirective directive = new VueDirective(name);
 		globalElements.put(name, directive);
 		return directive;
 	}
-	
+
 	/**
 	 * Adds a new global filter
+	 * 
 	 * @param name The filter name
 	 * @param body The filter body
 	 * @param args The filter arguments
 	 * @return The created filter
 	 */
-	public VueFilter addGlobalFilter(String name,String body,String...args) {
-		VueFilter filter=new VueFilter(name,body,args);
+	public VueFilter addGlobalFilter(String name, String body, String... args) {
+		VueFilter filter = new VueFilter(name, body, args);
 		globalElements.put(name, filter);
 		return filter;
 	}
-	
+
 	public String getEl() {
 		return el;
 	}
@@ -154,14 +158,15 @@ public class VueJS extends AbstractVueJS{
 		return delimiters;
 	}
 
-
 	public void setEl(String el) {
 		this.el = el;
 	}
 
 	/**
-	 * Sets axios as library to use for $http
-	 * do not forget to include the corresponding js file
+	 * Sets axios as library to use for $http do not forget to include the
+	 * corresponding js file
+	 * 
+	 * @param useAxios
 	 */
 	public void setUseAxios(boolean useAxios) {
 		this.useAxios = useAxios;

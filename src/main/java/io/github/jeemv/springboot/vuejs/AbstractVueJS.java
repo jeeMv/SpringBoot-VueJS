@@ -296,6 +296,15 @@ public abstract class AbstractVueJS {
 	}
 	
 	/**
+	 * Adds code (body) for the updated hook
+	 * wait until the entire view has been re-rendered with $nextTick
+	 * @param body the code to execute
+	 */
+	public void onUpdatedNextTick(String body) {
+		addHook("updated", "this.$nextTick(function () {"+body+"})");
+	}
+	
+	/**
 	 * Adds code (body) for the beforeDestroy hook
 	 * @param body the code to execute
 	 */

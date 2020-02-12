@@ -6,11 +6,11 @@
 
   <groupId>io.github.jeemv.springboot.vuejs</groupId>
   <artifactId>springboot-vuejs</artifactId>
-  <version>1.0.12</version>
+  <version>1.0.13</version>
 
   <name>springboot-vuejs</name>
   <url>https://github.com/jeeMv/SpringBoot-VueJS</url>
-  <description>a java wrapper for VueJS in SpringBoot.</description>
+  <description>a java wrapper for VueJS in Spring-boot.</description>
 
   <developers>
     <developer>
