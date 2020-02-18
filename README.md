@@ -254,3 +254,23 @@ vue.addMethod("updateUser",Http.put("user/","user","console.log('User updated!')
 ```
 
 For axios, Do not forget to include the corresponding js file.
+
+### Javascript resource
+The javascript code is sometimes too large to be neatly integrated into a java controller.
+In this case, it can be delocalized in a javascript file, which can refer to java variables of the controller.
+
+#### resource/static/js/sample.js
+```javascript
+//resource/static/js/sample.js
+console.log("${message}");
+```
+#### In the java controller
+```java
+	@GetMapping("sample")
+	public String testJs(@ModelAttribute("vue") VueJS vue) throws IOException {
+		JavascriptResource js = JavascriptResource.create("sample");
+		js.put("message", "Hello world!");
+		vue.addMethod("click", js.parseContent());
+		return "view";
+	}
+```
