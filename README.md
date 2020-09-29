@@ -64,11 +64,15 @@ public class UiTest {
 
 	@AutoWired
 	private VueJS vue;
+
+        @ModelAttribute(name = "vue")
+        private VueJS getVue() {
+            return this.vueJS;
+        }
 	
 	@GetMapping("test")
 	public String index(ModelMap model) {
 		vue.addData("message", "Hello world!");
-		model.put("vue", vue);
 		return "index";
 	}
 }
