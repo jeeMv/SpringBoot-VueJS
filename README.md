@@ -67,7 +67,7 @@ public class UiTest {
 
         @ModelAttribute(name = "vue")
         private VueJS getVue() {
-            return this.vueJS;
+            return this.vue;
         }
 	
 	@GetMapping("test")
