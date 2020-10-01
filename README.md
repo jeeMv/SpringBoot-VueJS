@@ -1,6 +1,7 @@
 # SpringBoot-VueJS 
 
 [![Join the chat at https://gitter.im/SpringBoot-VueJS/community](https://badges.gitter.im/SpringBoot-VueJS/community.svg)](https://gitter.im/SpringBoot-VueJS/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.jeemv.springboot.vuejs/springboot-vuejs)
 
 `SpringBoot-VueJS`adds `VueJS` to a `Spring-boot` Project for Creating Client-Side Application Logic Within Spring Controllers.
 ## Maven integration
