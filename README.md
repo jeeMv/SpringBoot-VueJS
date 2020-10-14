@@ -279,3 +279,33 @@ console.log("${message}");
 		return "view";
 	}
 ```
+### Javascript multi modules resource
+To avoid the multiplicity of javascript files, it is possible to group several scripts in the same file.
+
+Each script (qualified as a module) must be identified in the javascript file by a comment on a single line bearing its name, and a comment marking the end (also mentioning the name of the script).
+
+#### resource/static/js/multi.js
+Each script can possibly be isolated, which is without consequences.
+
+```javascript
+//resource/static/js/multi.js
+//----------------consoleMsg-----------------------
+console.log("${message}");
+//----------------consoleMsg (end)-----------------
+
+//----------------alertMsg-------------------------
+(function(){
+    alert("${message}");
+})();
+//----------------alertMsg (end)-------------------
+```
+#### In the java controller
+```java
+	@GetMapping("sample")
+	public String testJsMulti(@ModelAttribute("vue") VueJS vue) throws IOException {
+		JavascriptMultiModulesResource jsMulti=JavascriptMultiModulesResource.create("multi");
+		jsMulti.getModule("consoleMsg").put("message", "This is a console message");
+		vue.addMethod("click", js.parseContent("consoleMsg"));
+		return "view";
+	}
+```
