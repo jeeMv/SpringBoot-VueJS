@@ -60,7 +60,7 @@ public class JavascriptMultiModulesResource {
 	}
 	
 	public String parseContent(String moduleName) throws Exception {
-		JsResourceElement element=jsResourceElements.get(moduleName);
+		JsResourceElement element=getModule(moduleName);
 		element.setJsContent(getModuleCode(moduleName));
 		return element.parseContent();
 	}
