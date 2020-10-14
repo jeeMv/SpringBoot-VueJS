@@ -1,7 +1,5 @@
 /**
- * 
- */
-/**
+ * Json serializers
  * @author jc
  *
  */

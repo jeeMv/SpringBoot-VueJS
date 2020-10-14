@@ -1,7 +1,5 @@
 /**
- * 
- */
-/**
+ * Utility classes
  * @author jc
  *
  */

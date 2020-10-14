@@ -2,6 +2,7 @@
  * 
  */
 /**
+ * Manage VueJs components creation
  * @author jc
  *
  */

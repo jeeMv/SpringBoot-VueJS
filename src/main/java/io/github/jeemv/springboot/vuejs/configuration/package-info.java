@@ -3,7 +3,7 @@
  */
 /**
  * package-info
- * This class is part of springBoot-VueJS
+ * VueJs auto-configuration
  * @author jc
  * @version 1.0.0
  *
