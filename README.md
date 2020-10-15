@@ -265,6 +265,8 @@ The javascript code is sometimes too large to be neatly integrated into a java c
 In this case, it can be delocalized in a javascript file, which can refer to java variables of the controller.
 
 #### resource/static/js/sample.js
+The java variables are parsed with `${varName}` usage.
+
 ```javascript
 //resource/static/js/sample.js
 console.log("${message}");
