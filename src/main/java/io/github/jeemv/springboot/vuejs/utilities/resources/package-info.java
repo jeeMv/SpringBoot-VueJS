@@ -1,5 +1,5 @@
 /**
- * Javascript resources (JS file & multi-modules file)
+ * Javascript resources (JS file and multi-modules file)
  * @author jc
  *
  */
