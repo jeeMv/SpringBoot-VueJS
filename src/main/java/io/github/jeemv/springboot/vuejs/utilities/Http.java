@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Http class for Http requests
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.3
+ * @version 1.0.4
  */
 public class Http {
 
@@ -84,9 +84,9 @@ public class Http {
 		}
 		String error = "";
 		if (!"".equals(errorCallback) && errorCallback != null) {
-			error = ",function(response) {" + errorCallback + "}";
+			error = ",(response)=>{" + errorCallback + "}";
 		}
-		String result = "this.$http[" + method + "](" + url + ", " + data + ")" + ".then(function(response){" + successCallback + "}" + error + ");";
+		String result = "this.$http[" + method + "](" + url + ", " + data + ")" + ".then((response)=>{" + successCallback + "}" + error + ");";
 		return result;
 	}
 
