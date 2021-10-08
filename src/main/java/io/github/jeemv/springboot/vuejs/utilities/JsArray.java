@@ -52,6 +52,6 @@ public class JsArray {
 	 * @return
 	 */
 	public static String addOrReplace(String array, String index, String element) {
-		return "if(" + index + ">-1){" + replace(array, index, element) + "}else{" + add(array, element) + "}";
+		return "if(" + index + ">-1){" + replace(" + array + ", index, element) + "}else{" + add(" + array + ", element) + "}";
 	}
 }
