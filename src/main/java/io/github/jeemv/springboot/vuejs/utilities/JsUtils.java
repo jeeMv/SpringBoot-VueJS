@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.beans.RawObject;
@@ -43,93 +46,96 @@ import io.github.jeemv.springboot.vuejs.serializers.WatcherSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.WatchersSerializer;
 
 /**
- * JsUtils
- * This class is part of springBoot-VueJS
+ * JsUtils This class is part of springBoot-VueJS
+ * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 public class JsUtils {
-	
+
 	/**
 	 * Returns a JSON string from an object, using defined serializers
+	 * 
 	 * @param o the object to parse
 	 * @return the JSON string
 	 * @throws JsonProcessingException
 	 */
 	public static String objectToJSON(Object o) throws JsonProcessingException {
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-	    SimpleModule module = new SimpleModule();
-	    module.addSerializer(VueJS.class, new VueJSSerializer());
-	    module.addSerializer(VueComponent.class, new VueComponentSerializer());
-	    module.addSerializer(VueMethods.class, new MethodsSerializer());
-	    module.addSerializer(VueMethod.class, new MethodSerializer());
-	    module.addSerializer(VueComputeds.class, new ComputedsSerializer());
-	    module.addSerializer(VueComputed.class, new ComputedSerializer());
-	    module.addSerializer(VueWatchers.class, new WatchersSerializer());
-	    module.addSerializer(VueWatcher.class, new WatcherSerializer());
-	    module.addSerializer(VueProp.class, new PropSerializer());
-	    module.addSerializer(VueProps.class, new PropsSerializer());
-	    module.addSerializer(AbstractVueComposition.class, new AbstractCompositionSerializer());
-	    module.addSerializer(VueDirectives.class, new DirectivesSerializer());
-	    module.addSerializer(VueFilters.class, new FiltersSerializer());
-	    module.addSerializer(RawObject.class, new RawObjectSerializer());
-	    objectMapper.registerModule(module);
-	    if(VueConfig.debug) {
-	    	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	    }
-    	return objectMapper.writeValueAsString(o);
+		ObjectMapper objectMapper = new ObjectMapper().registerModule(new ParameterNamesModule())
+				.registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
+		objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+		SimpleModule module = new SimpleModule();
+		module.addSerializer(VueJS.class, new VueJSSerializer());
+		module.addSerializer(VueComponent.class, new VueComponentSerializer());
+		module.addSerializer(VueMethods.class, new MethodsSerializer());
+		module.addSerializer(VueMethod.class, new MethodSerializer());
+		module.addSerializer(VueComputeds.class, new ComputedsSerializer());
+		module.addSerializer(VueComputed.class, new ComputedSerializer());
+		module.addSerializer(VueWatchers.class, new WatchersSerializer());
+		module.addSerializer(VueWatcher.class, new WatcherSerializer());
+		module.addSerializer(VueProp.class, new PropSerializer());
+		module.addSerializer(VueProps.class, new PropsSerializer());
+		module.addSerializer(AbstractVueComposition.class, new AbstractCompositionSerializer());
+		module.addSerializer(VueDirectives.class, new DirectivesSerializer());
+		module.addSerializer(VueFilters.class, new FiltersSerializer());
+		module.addSerializer(RawObject.class, new RawObjectSerializer());
+		objectMapper.registerModule(module);
+		if (VueConfig.debug) {
+			objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		}
+		return objectMapper.writeValueAsString(o);
 	}
-	
-	public static <T> T jsonStringToObject(String jsonString,Class<T> clazz) throws JsonParseException, JsonMappingException, IOException {
+
+	public static <T> T jsonStringToObject(String jsonString, Class<T> clazz)
+			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-	    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		T o = mapper.readValue(jsonString,clazz);
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		T o = mapper.readValue(jsonString, clazz);
 		return o;
 	}
-	
+
 	public static String cleanJS(String javascriptCode) {
-		String result=javascriptCode;
-		result=indent(splitLines(result),"\t");
+		String result = javascriptCode;
+		result = indent(splitLines(result), "\t");
 		return result;
 	}
-	
+
 	private static String[] splitLines(String javascriptCode) {
-		javascriptCode=Matcher.quoteReplacement(javascriptCode);
+		javascriptCode = Matcher.quoteReplacement(javascriptCode);
 		Pattern regex = Pattern.compile("\\'[^']*'|(?:\\\"(?:\\\\\\\"|[^\\\"])*\\\")|([;\\\\{\\\\}])");
 		Matcher m = regex.matcher(javascriptCode);
-		StringBuffer b= new StringBuffer();
+		StringBuffer b = new StringBuffer();
 		while (m.find()) {
-		    if(m.group(1) != null) {
-		    	if("}".equals(m.group(1))) {
-		    		m.appendReplacement(b, "SplitHere"+m.group(0)+"SplitHere");
-		    	}else {
-		    		m.appendReplacement(b, m.group(0)+"SplitHere");
-		    	}
-		    }
-		    else m.appendReplacement(b, m.group(0).replace("\"", "\\\""));
+			if (m.group(1) != null) {
+				if ("}".equals(m.group(1))) {
+					m.appendReplacement(b, "SplitHere" + m.group(0) + "SplitHere");
+				} else {
+					m.appendReplacement(b, m.group(0) + "SplitHere");
+				}
+			} else
+				m.appendReplacement(b, m.group(0).replace("\"", "\\\""));
 		}
 		m.appendTail(b);
 		String replaced = b.toString();
 		return replaced.split("SplitHere");
 	}
-	
-	private static String indent(String[] javascriptLines,String tabulation) {
-		StringBuffer sb=new StringBuffer();
-		int dec=0;
-		for(String line:javascriptLines) {
-			if(!"".equals(line.trim())) {
-				if(!line.startsWith("\r\n") && sb.length()>0) {
+
+	private static String indent(String[] javascriptLines, String tabulation) {
+		StringBuffer sb = new StringBuffer();
+		int dec = 0;
+		for (String line : javascriptLines) {
+			if (!"".equals(line.trim())) {
+				if (!line.startsWith("\r\n") && sb.length() > 0) {
 					sb.append("\r\n");
 				}
-				if(dec>0) {
+				if (dec > 0) {
 					sb.append(new String(new char[dec]).replace("\0", tabulation));
 				}
-				if(line.endsWith("{")) {
+				if (line.endsWith("{")) {
 					dec++;
 				}
-				if(line.startsWith("}")) {
+				if (line.startsWith("}")) {
 					dec--;
 				}
 				sb.append(line);
@@ -137,13 +143,13 @@ public class JsUtils {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String wrapScript(String script) {
-		if(script==null || "".equals(script)) {
+		if (script == null || "".equals(script)) {
 			return "";
 		}
-		if(!script.startsWith("<script>")) {
-			script="<script>"+script+"</script>";
+		if (!script.startsWith("<script>")) {
+			script = "<script>" + script + "</script>";
 		}
 		return script;
 	}
