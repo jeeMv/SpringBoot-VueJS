@@ -4,7 +4,7 @@ package io.github.jeemv.springboot.vuejs.utilities;
  * JsArray Javascript array utilities This class is part of springBoot-VueJS
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 public class JsArray {
@@ -17,7 +17,7 @@ public class JsArray {
 	 * @return
 	 */
 	public static String remove(String array, String element) {
-		return array + ".splice(array.indexOf(" + element + "), 1);";
+		return array + ".splice(" + array + ".indexOf(" + element + "), 1);";
 	}
 
 	/**
@@ -52,6 +52,6 @@ public class JsArray {
 	 * @return
 	 */
 	public static String addOrReplace(String array, String index, String element) {
-		return "if(" + index + ">-1){" + replace(" + array + ", index, element) + "}else{" + add(" + array + ", element) + "}";
+		return "if(" + index + ">-1){" + replace(array, index, element) + "}else{" + add(array, element) + "}";
 	}
 }
