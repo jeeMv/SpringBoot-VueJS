@@ -6,37 +6,36 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Http class for Http requests
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.4
+ * @version 1.0.5
  */
 public class Http {
+
+	public static final String RESPONSE_DATA = "response.data";
 
 	/**
 	 * Submits an existing form
 	 * 
-	 * @param formRef
-	 *            the Vuejs form ref
-	 * @param action
-	 *            the action (url for submit)
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param formRef         the Vuejs form ref
+	 * @param action          the action (url for submit)
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String submitForm(String formRef, String action, String successCallback, String errorCallback) {
-		String result = "let form=this.$refs['" + formRef + "'];" + "let formData=form.model;" + request("form.$vnode.data.attrs.method.toLowerCase()", action, "formData", successCallback, errorCallback);
+		String result = "let form=this.$refs['" + formRef + "'];" + "let formData=form.model;" + request(
+				"form.$vnode.data.attrs.method.toLowerCase()", action, "formData", successCallback, errorCallback);
 		return result;
 	}
 
 	/**
 	 * Submits an existing form
 	 * 
-	 * @param formRef
-	 *            the Vuejs form ref
-	 * @param action
-	 *            the action (url for submit)
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param formRef         the Vuejs form ref
+	 * @param action          the action (url for submit)
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String submitForm(String formRef, String action, String successCallback) {
@@ -46,10 +45,8 @@ public class Http {
 	/**
 	 * Submits a form (form action must be provided on the html form)
 	 * 
-	 * @param formRef
-	 *            the ref attribute of the form
-	 * @param successCallback
-	 *            the javascript code to execute if success
+	 * @param formRef         the ref attribute of the form
+	 * @param successCallback the javascript code to execute if success
 	 * @return the generated javascript code
 	 */
 	public static String submitForm(String formRef, String successCallback) {
@@ -59,16 +56,14 @@ public class Http {
 	/**
 	 * Sends a request
 	 * 
-	 * @param method
-	 *            the http method (get,post,delete,patch,put,options,head)
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param method          the http method
+	 *                        (get,post,delete,patch,put,options,head)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String request(String method, String url, Object data, String successCallback, String errorCallback) {
@@ -86,21 +81,20 @@ public class Http {
 		if (!"".equals(errorCallback) && errorCallback != null) {
 			error = ",(response)=>{" + errorCallback + "}";
 		}
-		String result = "this.$http[" + method + "](" + url + ", " + data + ")" + ".then((response)=>{" + successCallback + "}" + error + ");";
+		String result = "this.$http[" + method + "](" + url + ", " + data + ")" + ".then((response)=>{"
+				+ successCallback + "}" + error + ");";
 		return result;
 	}
 
 	/**
 	 * Sends a request
 	 * 
-	 * @param method
-	 *            the http method (get,post,delete,patch,put,options,head)
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param method          the http method
+	 *                        (get,post,delete,patch,put,options,head)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String request(String method, String url, Object data, String successCallback) {
@@ -110,14 +104,12 @@ public class Http {
 	/**
 	 * Sends a get request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String get(String url, Object data, String successCallback, String errorCallback) {
@@ -127,12 +119,10 @@ public class Http {
 	/**
 	 * Sends a get request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String get(String url, Object data, String successCallback) {
@@ -142,10 +132,9 @@ public class Http {
 	/**
 	 * Sends a get request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String get(String url, String successCallback) {
@@ -155,12 +144,11 @@ public class Http {
 	/**
 	 * Sends a get request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String get(String url, String successCallback, String errorCallback) {
@@ -170,14 +158,12 @@ public class Http {
 	/**
 	 * Sends a delete request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String delete(String url, Object data, String successCallback, String errorCallback) {
@@ -187,12 +173,10 @@ public class Http {
 	/**
 	 * Sends a delete request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String delete(String url, Object data, String successCallback) {
@@ -202,10 +186,9 @@ public class Http {
 	/**
 	 * Sends a delete request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String delete(String url, String successCallback) {
@@ -215,12 +198,11 @@ public class Http {
 	/**
 	 * Sends a delete request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String delete(String url, String successCallback, String errorCallback) {
@@ -230,14 +212,12 @@ public class Http {
 	/**
 	 * Sends a put request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String put(String url, Object data, String successCallback, String errorCallback) {
@@ -247,12 +227,10 @@ public class Http {
 	/**
 	 * Sends a put request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String put(String url, Object data, String successCallback) {
@@ -262,10 +240,9 @@ public class Http {
 	/**
 	 * Sends a put request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String put(String url, String successCallback) {
@@ -275,12 +252,11 @@ public class Http {
 	/**
 	 * Sends a put request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String put(String url, String successCallback, String errorCallback) {
@@ -290,14 +266,12 @@ public class Http {
 	/**
 	 * Sends a patch request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String patch(String url, Object data, String successCallback, String errorCallback) {
@@ -307,12 +281,10 @@ public class Http {
 	/**
 	 * Sends a patch request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String patch(String url, Object data, String successCallback) {
@@ -322,10 +294,9 @@ public class Http {
 	/**
 	 * Sends a patch request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String patch(String url, String successCallback) {
@@ -335,12 +306,11 @@ public class Http {
 	/**
 	 * Sends a patch request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String patch(String url, String successCallback, String errorCallback) {
@@ -350,14 +320,12 @@ public class Http {
 	/**
 	 * Sends a post request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
-	 * @param errorCallback
-	 *            the javascript code to execute on error (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
+	 * @param errorCallback   the javascript code to execute on error (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String post(String url, Object data, String successCallback, String errorCallback) {
@@ -367,12 +335,10 @@ public class Http {
 	/**
 	 * Sends a post request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param data
-	 *            the data to send to the request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param data            the data to send to the request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String post(String url, Object data, String successCallback) {
@@ -382,10 +348,9 @@ public class Http {
 	/**
 	 * Sends a post request
 	 * 
-	 * @param url
-	 *            the url to request
-	 * @param successCallback
-	 *            the javascript code to execute if success (parameter response)
+	 * @param url             the url to request
+	 * @param successCallback the javascript code to execute if success (parameter
+	 *                        response)
 	 * @return
 	 */
 	public static String post(String url, String successCallback) {
@@ -395,10 +360,8 @@ public class Http {
 	/**
 	 * Defines a request header
 	 * 
-	 * @param key
-	 *            the header key
-	 * @param value
-	 *            the header value
+	 * @param key   the header key
+	 * @param value the header value
 	 * @return
 	 */
 	public static String setRequestHeader(String key, String value) {
