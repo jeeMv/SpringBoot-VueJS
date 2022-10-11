@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Http class for Http requests
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.5
+ * @version 1.0.6
  */
 public class Http {
 
@@ -358,14 +358,24 @@ public class Http {
 	}
 
 	/**
-	 * Defines a request header
+	 * Defines a request header.
 	 * 
 	 * @param key   the header key
 	 * @param value the header value
-	 * @return
+	 * @return the javascript generated
 	 */
 	public static String setRequestHeader(String key, String value) {
 		return "this.$http.headers.set('" + key + "', '" + value + "');";
+	}
+
+	/**
+	 * Adds response.data to an array.
+	 * 
+	 * @param array the array to update
+	 * @return the javascript generated
+	 */
+	public String responseToArray(String array) {
+		return JsArray.add(array, RESPONSE_DATA);
 	}
 
 }
