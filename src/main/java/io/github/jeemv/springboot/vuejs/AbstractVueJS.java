@@ -387,7 +387,7 @@ public abstract class AbstractVueJS {
 	 * @return the generated script (javascript)
 	 */
 	public String cloneOriginalData(String from, String dataTo) {
-		return String.format("this.%s={ ...%S};this.%s.original=%s;", dataTo, from, dataTo, from);
+		return String.format("this.%s={ ...%s};this.%s.original=%s;", dataTo, from, dataTo, from);
 	}
 
 	/**

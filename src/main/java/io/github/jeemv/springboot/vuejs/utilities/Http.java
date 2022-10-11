@@ -374,7 +374,7 @@ public class Http {
 	 * @param array the array to update
 	 * @return the javascript generated
 	 */
-	public String responseToArray(String array) {
+	public static String responseToArray(String array) {
 		return JsArray.add(array, RESPONSE_DATA);
 	}
 
