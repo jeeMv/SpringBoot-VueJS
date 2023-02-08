@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.PostConstruct;
-
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
  * VueJS instance This class is part of springBoot-VueJS
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 @Component
@@ -39,7 +38,7 @@ public class VueJS extends AbstractVueJS {
 
 	@Autowired(required = false)
 	protected VueJSAutoConfiguration vueJSAutoConfiguration;
-	private Logger logger;
+	private final Logger logger;
 
 	@PostConstruct
 	public void init() {
@@ -93,23 +92,23 @@ public class VueJS extends AbstractVueJS {
 	 */
 	@Override
 	public String getScript() {
-		String script = "";
+		StringBuilder script = new StringBuilder();
 		if (useAxios) {
-			script = "Vue.prototype.$http = axios;\n";
+			script = new StringBuilder("Vue.prototype.$http = axios;\n");
 		}
 		try {
 			for (Entry<String, VueComponent> entry : globalComponents.entrySet()) {
-				script += entry.getValue();
+				script.append(entry.getValue());
 			}
 			for (Entry<String, AbstractVueComposition> entry : globalElements.entrySet()) {
-				script += entry.getValue().getScript();
+				script.append(entry.getValue().getScript());
 			}
-			script += "new Vue(" + JsUtils.objectToJSON(this) + ");";
+			script.append("new Vue(").append(JsUtils.objectToJSON(this)).append(");");
 			return "<script>" + script + "</script>";
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		return script;
+		return script.toString();
 	}
 
 	/**
