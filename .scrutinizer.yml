@@ -9,7 +9,7 @@ build:
           remote_engine: true
   environment:
     sdkman:
-      - maven
+      - java 17.0.4-amzn
 checks:
   java:
     code_rating: true
