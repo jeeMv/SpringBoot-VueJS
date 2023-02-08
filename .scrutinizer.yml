@@ -9,7 +9,7 @@ build:
           remote_engine: true
   environment:
     sdkman:
-      - java@17.0.4-zulu
+      - java@17.0.6-open
       - maven@3.8.3
 checks:
   java:
