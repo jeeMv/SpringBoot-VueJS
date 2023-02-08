@@ -9,7 +9,8 @@ build:
           remote_engine: true
   environment:
     sdkman:
-      - java 17.0.4-amzn
+      - java 17.0.4-zulu
+      - maven 3.8.3
 checks:
   java:
     code_rating: true
