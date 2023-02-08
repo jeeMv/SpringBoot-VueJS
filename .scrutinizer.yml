@@ -1,0 +1,15 @@
+filter:
+  paths:
+    - src/main/java/
+build:
+  nodes:
+    analysis:
+      environment:
+        docker:
+          remote_engine: true
+  environment:
+    sdkman:
+      - maven
+checks:
+  java:
+    code_rating: true
