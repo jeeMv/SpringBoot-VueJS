@@ -4,16 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.jeemv.springboot.vuejs.beans.RawObject;
-import io.github.jeemv.springboot.vuejs.parts.VueComputeds;
-import io.github.jeemv.springboot.vuejs.parts.VueData;
-import io.github.jeemv.springboot.vuejs.parts.VueDirective;
-import io.github.jeemv.springboot.vuejs.parts.VueDirectives;
-import io.github.jeemv.springboot.vuejs.parts.VueFilter;
-import io.github.jeemv.springboot.vuejs.parts.VueFilters;
-import io.github.jeemv.springboot.vuejs.parts.VueHook;
-import io.github.jeemv.springboot.vuejs.parts.VueMethods;
-import io.github.jeemv.springboot.vuejs.parts.VueWatcher;
-import io.github.jeemv.springboot.vuejs.parts.VueWatchers;
+import io.github.jeemv.springboot.vuejs.parts.*;
 import io.github.jeemv.springboot.vuejs.utilities.Http;
 
 /**
@@ -73,12 +64,23 @@ public abstract class AbstractVueJS {
 
 	/**
 	 * Adds a method
+	 *
+	 * @param name the method name
+	 * @return the method
+	 */
+	public VueMethod addMethod(String name) {
+		return this.addMethod(name, "", new String[] {});
+	}
+
+	/**
+	 * Adds a method
 	 * 
 	 * @param name the method name
 	 * @param body the method body (javascript)
+	 * @return the method
 	 */
-	public void addMethod(String name, String body) {
-		this.addMethod(name, body, new String[] {});
+	public VueMethod addMethod(String name, String body) {
+		return this.addMethod(name, body, new String[] {});
 	}
 
 	/**
@@ -87,9 +89,10 @@ public abstract class AbstractVueJS {
 	 * @param name   the method name
 	 * @param body   the method body (javascript)
 	 * @param params the method parameters
+	 * @return the method
 	 */
-	public void addMethod(String name, String body, String... params) {
-		methods.add(name, body, params);
+	public VueMethod addMethod(String name, String body, String... params) {
+		return methods.add(name, body, params);
 	}
 
 	/**

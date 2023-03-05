@@ -18,6 +18,8 @@ public class VueJSProperties {
     
     private boolean vuetify;
 
+	private String vueVersion="3.*";
+
 	public String[] getDelimiters() {
 		return delimiters;
 	}
@@ -47,6 +49,10 @@ public class VueJSProperties {
 		return DEFAULT_ELEMENT;
 	}
 
+	public String getVueVersion() {
+		return vueVersion;
+	}
+
 	public void setDelimiters(String... delimiters) {
 		this.delimiters = delimiters;
 	}
@@ -69,5 +75,9 @@ public class VueJSProperties {
 
 	public void setVuetify(boolean vuetify) {
 		this.vuetify = vuetify;
+	}
+
+	public void setVueVersion(String vueVersion) {
+		this.vueVersion=vueVersion;
 	}
 }

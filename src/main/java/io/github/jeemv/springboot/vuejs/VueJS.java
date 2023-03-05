@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import io.github.jeemv.springboot.vuejs.configuration.VueVersion;
+import io.github.jeemv.springboot.vuejs.configuration.versions.Vue2Version;
+import io.github.jeemv.springboot.vuejs.configuration.versions.Vue3Version;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,8 @@ public class VueJS extends AbstractVueJS {
 	protected String[] delimiters;
 	protected boolean useAxios;
 	protected boolean vuetify;
+
+	protected String vueVersion;
 	protected Map<String, VueComponent> globalComponents;
 	protected Map<String, AbstractVueComposition> globalElements;
 
@@ -40,6 +45,12 @@ public class VueJS extends AbstractVueJS {
 	protected VueJSAutoConfiguration vueJSAutoConfiguration;
 	private final Logger logger;
 
+	protected VueVersion getVueVersion() {
+		if (isVue2()) {
+			return new Vue2Version(useAxios);
+		}
+		return new Vue3Version(useAxios);
+	}
 	@PostConstruct
 	public void init() {
 		if (null == vueJSAutoConfiguration) {
@@ -54,6 +65,7 @@ public class VueJS extends AbstractVueJS {
 				vuetify = true;
 			}
 			el = vueJSProperties.getEl();
+			vueVersion = vueJSProperties.getVueVersion();
 		}
 	}
 
@@ -65,6 +77,7 @@ public class VueJS extends AbstractVueJS {
 		this.el = element;
 		globalComponents = new HashMap<>();
 		globalElements = new HashMap<>();
+		vueVersion=VueVersion.VUE_3;
 		logger = LoggerFactory.getLogger(VueJS.class);
 	}
 
@@ -92,10 +105,9 @@ public class VueJS extends AbstractVueJS {
 	 */
 	@Override
 	public String getScript() {
+		VueVersion vueVersion = getVueVersion();
 		StringBuilder script = new StringBuilder();
-		if (useAxios) {
-			script = new StringBuilder("Vue.prototype.$http = axios;\n");
-		}
+
 		try {
 			for (Entry<String, VueComponent> entry : globalComponents.entrySet()) {
 				script.append(entry.getValue());
@@ -103,7 +115,7 @@ public class VueJS extends AbstractVueJS {
 			for (Entry<String, AbstractVueComposition> entry : globalElements.entrySet()) {
 				script.append(entry.getValue().getScript());
 			}
-			script.append("new Vue(").append(JsUtils.objectToJSON(this)).append(");");
+			script.append(vueVersion.generateVueJSInstance(JsUtils.objectToJSON(this),el));
 			return "<script>" + script + "</script>";
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -173,6 +185,10 @@ public class VueJS extends AbstractVueJS {
 
 	public boolean isVuetify() {
 		return vuetify;
+	}
+
+	public boolean isVue2() {
+		return vueVersion.startsWith("2");
 	}
 
 }

@@ -65,7 +65,7 @@ public class VueComponent extends AbstractVueJS{
 		String script="";
 		try {
 			if(name!=null && !"".equals(name)) {
-				script="Vue.component('"+name+"',"+JsUtils.objectToJSON(this)+");";
+				script="app.component('"+name+"',"+JsUtils.objectToJSON(this)+");";
 				if(!internal)
 					script= JsUtils.wrapScript(script);
 			}else {

@@ -13,7 +13,7 @@ import io.github.jeemv.springboot.vuejs.utilities.Serialization;
  * VueJSSerializer
  * This class is part of springBoot-VueJS
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 public class VueJSSerializer extends StdSerializer<VueJS> {
@@ -33,7 +33,9 @@ public class VueJSSerializer extends StdSerializer<VueJS> {
 	@Override
 	public void serialize(VueJS value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 		gen.writeStartObject();
-        gen.writeStringField("el", value.getEl());
+		if(value.isVue2()) {
+			gen.writeStringField("el", value.getEl());
+		}
         if(value.isVuetify()) {
         	gen.writeFieldName("vuetify");
         	gen.writeRawValue("new Vuetify()");

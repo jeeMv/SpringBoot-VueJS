@@ -7,13 +7,15 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
  * VueMethods
  * This class is part of springBoot-VueJS
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 public class VueMethods extends VuePart {
 	
-	public void add(String name,String body,String...params) {
-		this.elements.put(name, new VueMethod(body, params));
+	public VueMethod add(String name,String body,String...params) {
+		VueMethod method=new VueMethod(body, params);
+		this.elements.put(name, method);
+		return method;
 	}
 	public void addProperty(String name,Object value) {
 		this.elements.put(name, value);

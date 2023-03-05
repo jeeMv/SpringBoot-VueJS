@@ -6,7 +6,7 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
  * AbstractVueComposition
  * This class is part of springBoot-VueJS
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 public abstract class AbstractVueComposition {
@@ -29,7 +29,7 @@ public abstract class AbstractVueComposition {
 	public String getScript() {
 		String script="";
 		if(name!=null && !"".equals(name)) {
-			script="Vue."+getType()+"('"+name+"',"+this.toString()+");";
+			script="app."+getType()+"('"+name+"',"+this.toString()+");";
 			if(!internal)
 				script= JsUtils.wrapScript(script);
 		}else {
