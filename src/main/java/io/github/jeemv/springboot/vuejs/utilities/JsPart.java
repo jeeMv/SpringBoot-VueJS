@@ -182,4 +182,12 @@ public class JsPart {
     public String toString() {
         return content.toString();
     }
+
+	public static JsPart instance() {
+		return new JsPart();
+	}
+
+	public static JsPart instance(String jsScript) {
+		return new JsPart(jsScript);
+	}
 }
