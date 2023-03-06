@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import io.github.jeemv.springboot.vuejs.configuration.VueVersion;
 import io.github.jeemv.springboot.vuejs.configuration.versions.Vue2Version;
 import io.github.jeemv.springboot.vuejs.configuration.versions.Vue3Version;
+import io.github.jeemv.springboot.vuejs.utilities.Http;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
  * VueJS instance This class is part of springBoot-VueJS
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.4
+ * @version 1.0.5
  *
  */
 @Component
@@ -64,6 +65,7 @@ public class VueJS extends AbstractVueJS {
 			if (vueJSProperties.isVuetify()) {
 				vuetify = true;
 			}
+			Http.RESPONSE_DATA = vueJSProperties.getHttpData();
 			el = vueJSProperties.getEl();
 			vueVersion = vueJSProperties.getVueVersion();
 		}

@@ -3,6 +3,13 @@ package io.github.jeemv.springboot.vuejs.configuration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * VueJSProperties
+ * This class is part of springBoot-VueJS
+ * @author jcheron
+ * @version 1.0.2
+ *
+ */
 @ConfigurationProperties(prefix = "springboot.vuejs")
 @Component
 public class VueJSProperties {
@@ -19,6 +26,8 @@ public class VueJSProperties {
     private boolean vuetify;
 
 	private String vueVersion="3.*";
+
+	private String httpData="response.data";
 
 	public String[] getDelimiters() {
 		return delimiters;
@@ -67,6 +76,14 @@ public class VueJSProperties {
 
 	public void setAxios(boolean axios) {
 		this.axios = axios;
+	}
+
+	public String getHttpData() {
+		return httpData;
+	}
+
+	public void setHttpData(String httpData) {
+		this.httpData=httpData;
 	}
 
 	public boolean isVuetify() {

@@ -6,11 +6,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Http class for Http requests
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.6
+ * @version 1.0.7
  */
 public class Http {
 
-	public static final String RESPONSE_DATA = "response.data";
+	public static String RESPONSE_DATA = "response.data";
 
 	/**
 	 * Submits an existing form
@@ -376,6 +376,15 @@ public class Http {
 	 */
 	public static String responseToArray(String array) {
 		return JsArray.add(array, RESPONSE_DATA);
+	}
+
+	/**
+	 * Sets response.data to a variable
+	 * @param variable
+	 * @return
+	 */
+	public static String setResponseToVariable(String variable) {
+		return variable + " = " + RESPONSE_DATA + ";";
 	}
 
 }
