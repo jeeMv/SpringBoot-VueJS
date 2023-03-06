@@ -4,7 +4,7 @@ package io.github.jeemv.springboot.vuejs.utilities;
  * JsArray Javascript array utilities This class is part of springBoot-VueJS
  * 
  * @author jcheron myaddressmail@gmail.com
- * @version 1.0.3
+ * @version 1.0.4
  *
  */
 public class JsArray {
@@ -74,5 +74,29 @@ public class JsArray {
 	 */
 	public static String removeByProperty(String array,String property,String value) {
 		return array+".splice("+array+".findIndex(e => e."+property+"=="+value+"),1);";
+	}
+
+	public static String findByProperty(String array,String property,String value) {
+		return array+".find(e => e."+property+"=="+value+");";
+	}
+
+	public static String findIndexByProperty(String array,String property,String value) {
+		return array+".findIndex(e => e."+property+"=="+value+");";
+	}
+
+	public static String containsByProperty(String array,String property,String value) {
+		return array+".findIndex(e => e."+property+"=="+value+")>-1;";
+	}
+
+	public static String contains(String array,String element) {
+		return array+".indexOf("+element+")>-1;";
+	}
+
+	public static String letFindByProperty(String variable,String array,String property,String value) {
+		return "let "+variable+"="+findByProperty(array,property,value);
+	}
+
+	public static String letRemoveByProperty(String variable,String array,String property,String value) {
+		return "let "+variable+"="+removeByProperty(array,property,value);
 	}
 }
