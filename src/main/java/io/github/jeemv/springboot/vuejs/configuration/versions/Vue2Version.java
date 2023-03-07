@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Vue2Version extends VueVersion {
 
-    public Vue2Version(boolean useAxios) {
-        super(useAxios);
+    public Vue2Version(boolean useAxios, String beforeMountScript) {
+        super(useAxios, beforeMountScript);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Vue2Version extends VueVersion {
         if (useAxios) {
             script += generateAxios();
         }
-        return script;
+        return script+beforeMountScript+"\n";
     }
 
     protected String generateAxios() {

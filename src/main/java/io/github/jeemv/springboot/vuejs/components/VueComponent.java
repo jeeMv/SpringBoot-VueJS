@@ -33,9 +33,9 @@ import io.github.jeemv.springboot.vuejs.utilities.JsUtils;
 /**
  * VueJS component class
  * This class is part of springBoot-VueJS
- * Components are create in src/main/resources/static/
+ * Components are created in src/main/resources/static/
  * @author jc
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 public class VueComponent extends AbstractVueJS{
@@ -88,29 +88,33 @@ public class VueComponent extends AbstractVueJS{
 	/**
 	 * Defines the template string
 	 * @param template
+	 * @return VueComponent
 	 */
-	public void setTemplate(String template) {
+	public VueComponent setTemplate(String template) {
 		this.template = template;
+		return this;
 	}
 	
 	/**
 	 * Sets a template file
 	 * @param pathFilename
+	 * @return VueComponent
 	 */
-	public void setTemplateFile(String pathFilename) {
+	public VueComponent setTemplateFile(String pathFilename) {
 		try {
 			loadTemplateFile("templates/"+pathFilename);
 		} catch (IOException e) {
 			template=e.getMessage();
 			e.printStackTrace();
 		}
+		return this;
 	}
 	
 	/**
 	 * Sets the default template file (componentName+".html")
 	 */
-	public void setDefaultTemplateFile() {
-		setTemplateFile(VueConfig.getTemplateComponentFolder()+"/"+name+".html");
+	public VueComponent setDefaultTemplateFile() {
+		return setTemplateFile(VueConfig.getTemplateComponentFolder()+"/"+name+".html");
 	}
 
 	public boolean isInternal() {
@@ -132,11 +136,13 @@ public class VueComponent extends AbstractVueJS{
 	/**
 	 * Sets the component properties
 	 * @param props
+	 * @return VueComponent
 	 */
-	public void setProps(String...props) {
+	public VueComponent setProps(String...props) {
 		for(String prop:props) {
 			this.props.add(prop);
 		}
+		return this;
 	}
 	
 	/**

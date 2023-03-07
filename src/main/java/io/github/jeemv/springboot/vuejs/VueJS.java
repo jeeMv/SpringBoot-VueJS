@@ -1,9 +1,11 @@
 package io.github.jeemv.springboot.vuejs;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.jeemv.springboot.vuejs.configuration.VueVersion;
 import io.github.jeemv.springboot.vuejs.configuration.versions.Vue2Version;
 import io.github.jeemv.springboot.vuejs.configuration.versions.Vue3Version;
@@ -39,6 +41,9 @@ public class VueJS extends AbstractVueJS {
 	protected boolean vuetify;
 
 	protected String vueVersion;
+
+	@JsonIgnore
+	protected String beforeMountScript;
 	protected Map<String, VueComponent> globalComponents;
 	protected Map<String, AbstractVueComposition> globalElements;
 
@@ -46,11 +51,11 @@ public class VueJS extends AbstractVueJS {
 	protected VueJSAutoConfiguration vueJSAutoConfiguration;
 	private final Logger logger;
 
-	protected VueVersion getVueVersion() {
+	protected VueVersion getVueVersion(String globalScript) {
 		if (isVue2()) {
-			return new Vue2Version(useAxios);
+			return new Vue2Version(useAxios,globalScript+this.beforeMountScript);
 		}
-		return new Vue3Version(useAxios);
+		return new Vue3Version(useAxios,globalScript+this.beforeMountScript);
 	}
 	@PostConstruct
 	public void init() {
@@ -72,7 +77,7 @@ public class VueJS extends AbstractVueJS {
 	}
 
 	/**
-	 * @param element the DOM selector for the VueJS application
+	 * @param element the DOM selector for the VueJS application.
 	 */
 	public VueJS(String element) {
 		super();
@@ -80,18 +85,19 @@ public class VueJS extends AbstractVueJS {
 		globalComponents = new HashMap<>();
 		globalElements = new HashMap<>();
 		vueVersion=VueVersion.VUE_3;
+		beforeMountScript="";
 		logger = LoggerFactory.getLogger(VueJS.class);
 	}
 
 	/**
-	 * Starts the VueJS app with v-app element
+	 * Starts the VueJS app with v-app element.
 	 */
 	public VueJS() {
 		this("v-app");
 	}
 
 	/**
-	 * Defines the element delimiters (&lt;% %&gt;)
+	 * Defines the element delimiters (&lt;% %&gt;).
 	 * 
 	 * @param start default: &lt;%
 	 * @param end   default: %&gt;
@@ -101,22 +107,23 @@ public class VueJS extends AbstractVueJS {
 	}
 
 	/**
-	 * Returns the generated script creating the VueJS instance
+	 * Returns the generated script creating the VueJS instance.
 	 * 
 	 * @return the generated script (javascript)
 	 */
 	@Override
 	public String getScript() {
-		VueVersion vueVersion = getVueVersion();
+		StringBuilder globalScript = new StringBuilder();
 		StringBuilder script = new StringBuilder();
 
 		try {
 			for (Entry<String, VueComponent> entry : globalComponents.entrySet()) {
-				script.append(entry.getValue());
+				globalScript.append(entry.getValue());
 			}
 			for (Entry<String, AbstractVueComposition> entry : globalElements.entrySet()) {
-				script.append(entry.getValue().getScript());
+				globalScript.append(entry.getValue().getScript());
 			}
+			VueVersion vueVersion = getVueVersion(globalScript.toString());
 			script.append(vueVersion.generateVueJSInstance(JsUtils.objectToJSON(this),el));
 			return "<script>" + script + "</script>";
 		} catch (JsonProcessingException e) {
@@ -126,7 +133,7 @@ public class VueJS extends AbstractVueJS {
 	}
 
 	/**
-	 * Adds a new global component
+	 * Adds a new global component.
 	 * 
 	 * @param name The component name
 	 * @return The created component
@@ -138,7 +145,7 @@ public class VueJS extends AbstractVueJS {
 	}
 
 	/**
-	 * Adds a new global directive
+	 * Adds a new global directive.
 	 * 
 	 * @param name The directive name
 	 * @return The created directive
@@ -150,7 +157,7 @@ public class VueJS extends AbstractVueJS {
 	}
 
 	/**
-	 * Adds a new global filter
+	 * Adds a new global filter.
 	 * 
 	 * @param name The filter name
 	 * @param body The filter body
@@ -177,7 +184,7 @@ public class VueJS extends AbstractVueJS {
 
 	/**
 	 * Sets axios as library to use for $http do not forget to include the
-	 * corresponding js file
+	 * corresponding js file.
 	 * 
 	 * @param useAxios
 	 */
@@ -191,6 +198,23 @@ public class VueJS extends AbstractVueJS {
 
 	public boolean isVue2() {
 		return vueVersion.startsWith("2");
+	}
+
+	/**
+	 * Adds a script to be executed before the VueJS instance is mounted.
+	 * @param script
+	 */
+	public void addBeforeMountScript(String script) {
+		this.beforeMountScript+=script;
+	}
+
+	/**
+	 * Loads a script from a file and adds it to the before mount script.
+	 * @param filename
+	 * @throws IOException
+	 */
+	public void loadAndAddBeforeMountScript(String filename) throws IOException {
+		this.beforeMountScript+=JsUtils.loadJsFile(filename);
 	}
 
 }

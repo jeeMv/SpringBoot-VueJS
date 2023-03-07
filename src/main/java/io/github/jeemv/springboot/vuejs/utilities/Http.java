@@ -379,12 +379,52 @@ public class Http {
 	}
 
 	/**
+	 * Adds response.data.{part} to an array.
+	 *
+	 * @param array the array to update
+	 * @return the javascript generated
+	 */
+	public static String responseToArray(String array,String part) {
+		return JsArray.add(array, RESPONSE_DATA+"."+part);
+	}
+
+	/**
+	 * Adds response.data array to an array.
+	 *
+	 * @param array the array to update
+	 * @return the javascript generated
+	 */
+	public static String responseArrayToArray(String array) {
+		return JsArray.addAll(array, RESPONSE_DATA);
+	}
+
+	/**
+	 * Adds response.data.{part} array to an array.
+	 *
+	 * @param array the array to update
+	 * @return the javascript generated
+	 */
+	public static String responseArrayToArray(String array,String part) {
+		return JsArray.addAll(array, RESPONSE_DATA+"."+part);
+	}
+
+	/**
 	 * Sets response.data to a variable
 	 * @param variable
 	 * @return
 	 */
 	public static String setResponseToVariable(String variable) {
 		return variable + " = " + RESPONSE_DATA + ";";
+	}
+
+	/**
+	 * Sets response.data.{part} to a variable
+	 * @param variable
+	 * @param part
+	 * @return
+	 */
+	public static String setResponseToVariable(String variable,String part) {
+		return variable + " = " + RESPONSE_DATA+"."+part + ";";
 	}
 
 }

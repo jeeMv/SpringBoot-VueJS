@@ -11,12 +11,18 @@ import org.springframework.core.io.Resource;
  * JsResourceLoader
  * This class is part of springBoot-VueJS
  * @author jc
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 public class JsResourceLoader {
-	private static final String ROOT_FOLDER = "static/js/";
+	private String rootFolder;
 
+	public JsResourceLoader() {
+		rootFolder= "static/js/";
+	}
+	public JsResourceLoader(String rootFolder) {
+		this.rootFolder="static/"+rootFolder;
+	}
 	/**
 	 * Loads a javascript file.
 	 * 
@@ -26,7 +32,7 @@ public class JsResourceLoader {
 	 * @throws IOException
 	 */
 	public String loadFile(String filename) throws IOException {
-		filename = ROOT_FOLDER + filename + ".js";
+		filename = rootFolder + filename + ".js";
 		Resource resource = new ClassPathResource(filename);
 		InputStream resourceInputStream = resource.getInputStream();
 		ByteArrayOutputStream result = new ByteArrayOutputStream();

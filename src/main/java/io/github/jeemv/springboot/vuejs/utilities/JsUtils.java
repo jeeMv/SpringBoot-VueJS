@@ -44,6 +44,7 @@ import io.github.jeemv.springboot.vuejs.serializers.VueComponentSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.VueJSSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.WatcherSerializer;
 import io.github.jeemv.springboot.vuejs.serializers.WatchersSerializer;
+import io.github.jeemv.springboot.vuejs.utilities.resources.JsResourceLoader;
 
 /**
  * JsUtils This class is part of springBoot-VueJS
@@ -152,5 +153,10 @@ public class JsUtils {
 			script = "<script>" + script + "</script>";
 		}
 		return script;
+	}
+
+	public static String loadJsFile(String filename) throws IOException {
+		JsResourceLoader loader = new JsResourceLoader("");
+		return loader.loadFile(filename);
 	}
 }
